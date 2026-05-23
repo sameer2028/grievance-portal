@@ -1,21 +1,19 @@
 """
-Duplicate Detector
--------------------
-Model: sentence-transformers (all-MiniLM-L6-v2)
-Why: 384-dimension embeddings capture semantic meaning, not just exact string matches.
-     Two grievances saying "no water" and "water supply cut" will be detected as similar.
+Duplicate Detector (Lightweight TF-IDF Version)
+-----------------------------------------------
+Model: scikit-learn TfidfVectorizer + Cosine Similarity
+Why: Requires 0MB of model loading, uses virtually no RAM, and runs instantly.
+     Perfect for the Render 512MB free tier while still providing solid 
+     keyword-based duplicate detection.
 
 Architecture:
-- On startup: embed the last N grievances and store in memory.
-- On new grievance: compute embedding, find cosine similarity against stored embeddings.
-- If max similarity > threshold → mark as duplicate.
-
-Scale note: For >10k grievances, replace the in-memory store with a vector DB
-            (Pinecone, Weaviate, or pgvector). For the hackathon, this is fine.
+- On startup: Ready instantly.
+- On new grievance: Compute TF-IDF matrix for the new text + stored texts.
+- Find cosine similarity. If max similarity > threshold → mark as duplicate.
 """
 
 import numpy as np
-from sentence_transformers import SentenceTransformer
+from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from utils.logger import get_logger
 from config.settings import get_settings
@@ -26,36 +24,28 @@ settings = get_settings()
 
 class DuplicateDetector:
     def __init__(self):
-        self.model: SentenceTransformer | None = None
-        # In-memory store: list of {"grievance_id": str, "embedding": np.array}
+        # In-memory store: list of {"grievance_id": str, "text": str}
         self._store: list[dict] = []
         self._is_loaded = False
 
     def load(self):
-        """Download and cache the sentence transformer model."""
-        logger.info(f"Loading embedding model: {settings.embedding_model}")
-        self.model = SentenceTransformer(settings.embedding_model)
+        """Initialize the lightweight detector."""
+        logger.info("Initializing lightweight TF-IDF duplicate detector")
         self._is_loaded = True
         logger.info("Duplicate detector ready")
 
-    def _embed(self, text: str) -> np.ndarray:
-        """Encode a string to a fixed-size embedding vector."""
-        return self.model.encode([text], convert_to_numpy=True, normalize_embeddings=True)[0]
-
     def add_to_store(self, grievance_id: str, title: str, description: str):
         """
-        Register a new grievance embedding.
+        Register a new grievance text in memory.
         Call this AFTER confirming the grievance is not a duplicate.
         """
         if not self._is_loaded:
             return
 
-        text = f"{title} {description}"
-        embedding = self._embed(text)
-        self._store.append({"grievance_id": grievance_id, "embedding": embedding})
+        text = f"{title} {description}".lower()
+        self._store.append({"grievance_id": grievance_id, "text": text})
 
         # Keep memory bounded — only last 500 grievances
-        # In production, persist these to a vector DB
         if len(self._store) > 500:
             self._store = self._store[-500:]
 
@@ -68,19 +58,29 @@ class DuplicateDetector:
         Returns:
             {
                 "is_duplicate": bool,
-                "duplicate_of": str | None,   # grievance_id of the original
+                "duplicate_of": str | None,
                 "similarity_score": float
             }
         """
         if not self._is_loaded or len(self._store) == 0:
             return {"is_duplicate": False, "duplicate_of": None, "similarity_score": 0.0}
 
-        text = f"{title} {description}"
-        new_embedding = self._embed(text)
+        new_text = f"{title} {description}".lower()
+        
+        # Combine the new text (index 0) with all stored texts
+        all_texts = [new_text] + [s["text"] for s in self._store]
 
-        # Stack all stored embeddings into a matrix for batch comparison
-        stored_embeddings = np.stack([s["embedding"] for s in self._store])
-        similarities = cosine_similarity([new_embedding], stored_embeddings)[0]
+        # Vectorize on the fly (ignoring common English stop words)
+        vectorizer = TfidfVectorizer(stop_words='english')
+        
+        try:
+            tfidf_matrix = vectorizer.fit_transform(all_texts)
+        except ValueError:
+            # Failsafe if text only contains stop words or is empty
+            return {"is_duplicate": False, "duplicate_of": None, "similarity_score": 0.0}
+
+        # Compare index 0 (new_text) to all other rows
+        similarities = cosine_similarity(tfidf_matrix[0:1], tfidf_matrix[1:])[0]
 
         max_idx = int(np.argmax(similarities))
         max_score = float(similarities[max_idx])
