@@ -171,7 +171,7 @@ const updateGrievanceStatus = async ({
   }
 
   // Officers can only update their department's grievances
-  if (updatedBy.role === ROLES.OFFICER && grievance.department !== updatedBy.department) {
+  if (updatedBy.role === ROLES.OFFICER && grievance.department.toLowerCase() !== updatedBy.department.toLowerCase()) {
     throw new AppError('You can only update grievances in your department', 403);
   }
 
