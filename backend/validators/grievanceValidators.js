@@ -60,7 +60,7 @@ const assignGrievanceValidators = [
 
 const listGrievanceValidators = [
   query('page').optional().isInt({ min: 1 }).withMessage('Page must be a positive integer'),
-  query('limit').optional().isInt({ min: 1, max: 100 }).withMessage('Limit must be 1–100'),
+  query('limit').optional().isInt({ min: 1, max: 200 }).withMessage('Limit must be 1–100'),
   query('status').optional().isIn(Object.values(GRIEVANCE_STATUS)).withMessage('Invalid status'),
   query('department').optional().isIn(Object.values(DEPARTMENTS)).withMessage('Invalid department'),
   query('priority').optional().isIn(Object.values(PRIORITY_LEVELS)).withMessage('Invalid priority'),
