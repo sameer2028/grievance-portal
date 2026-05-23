@@ -8,8 +8,10 @@ const logger = require('../utils/logger');
  * Generate access + refresh token pair for a user.
  * Access token is short-lived; refresh token is long-lived.
  */
-const generateTokens = (userId, email, role) => {
-  const payload = { id: userId, email, role };
+// Add department as an optional parameter (defaulting to an empty string)
+const generateTokens = (userId, email, role, department = "") => {
+  // Include department in the payload
+  const payload = { id: userId, email, role, department };
 
   const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET, {
     expiresIn: process.env.JWT_ACCESS_EXPIRES_IN || '15m',
@@ -67,7 +69,7 @@ const loginUser = async ({ email, password }) => {
     throw new AppError('Invalid credentials', 401);
   }
 
-  const { accessToken, refreshToken } = generateTokens(user._id, user.email, user.role);
+  const { accessToken, refreshToken } = generateTokens(user._id, user.email, user.role,user.department);
 
   user.refreshToken = refreshToken;
   user.lastLogin = new Date();
