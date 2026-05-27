@@ -145,18 +145,18 @@ const UserManagementPage = () => {
   };
 
   const ROLE_COLORS = {
-    super_admin: 'bg-purple-100 text-purple-700',
-    admin:       'bg-blue-100 text-blue-700',
-    officer:     'bg-green-100 text-green-700',
-    citizen:     'bg-gray-100 text-gray-600',
+    super_admin: 'bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300',
+    admin:       'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300',
+    officer:     'bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300',
+    citizen:     'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300',
   };
 
   return (
     <div className="space-y-5 animate-fade-in">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">User Management</h1>
-          {pagination && <p className="text-sm text-gray-500 mt-0.5">{pagination.total} users</p>}
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">User Management</h1>
+          {pagination && <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">{pagination.total} users</p>}
         </div>
         <button onClick={() => setCreateModalOpen(true)} className="btn-primary">
           + Create Officer
@@ -170,7 +170,7 @@ const UserManagementPage = () => {
           value={search} onChange={(e) => { setSearch(e.target.value); setPage(1); }}
           className="input text-sm py-1.5 flex-1 min-w-[180px]"
         />
-        <select value={roleFilter} onChange={(e) => { setRoleFilter(e.target.value); setPage(1); }} className="text-sm border border-gray-300 rounded-md px-3 py-1.5 bg-white">
+        <select value={roleFilter} onChange={(e) => { setRoleFilter(e.target.value); setPage(1); }} className="text-sm border border-gray-300 dark:border-gray-600 rounded-md px-3 py-1.5 bg-white dark:bg-gray-700 dark:text-gray-200">
           <option value="">All Roles</option>
           {Object.values(ROLES).map((r) => <option key={r} value={r} className="capitalize">{r.replace('_', ' ')}</option>)}
         </select>
@@ -182,24 +182,24 @@ const UserManagementPage = () => {
           <div className="flex justify-center py-16"><Spinner size="lg" /></div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+              <thead className="bg-gray-50 dark:bg-gray-800">
                 <tr>
                   {['User', 'Role', 'Department', 'Status', 'Joined', 'Actions'].map((h) => (
                     <th key={h} className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">{h}</th>
                   ))}
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-100">
+              <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-100 dark:divide-gray-700">
                 {users.map((u) => (
-                  <tr key={u._id} className="hover:bg-gray-50 transition-colors">
+                  <tr key={u._id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center text-xs font-bold shrink-0">
+                        <div className="w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300 flex items-center justify-center text-xs font-bold shrink-0">
                           {getInitials(u.name)}
                         </div>
                         <div>
-                          <p className="text-sm font-medium text-gray-900">{u.name}</p>
+                          <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{u.name}</p>
                           <p className="text-xs text-gray-400">{u.email}</p>
                         </div>
                       </div>
@@ -209,7 +209,7 @@ const UserManagementPage = () => {
                         {u.role?.replace('_', ' ')}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-600">
+                    <td className="px-4 py-3 text-sm text-gray-600 dark:text-gray-400">
                       {DEPARTMENT_LABELS[u.department] || '—'}
                     </td>
                     <td className="px-4 py-3">

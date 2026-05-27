@@ -2,6 +2,8 @@ const { asyncHandler } = require('../middlewares/errorHandler');
 const { sendSuccess } = require('../utils/apiResponse');
 const authService = require('../services/authService');
 const { HTTP_STATUS } = require('../config/constants');
+const User = require('../models/User');
+const { AppError } = require('../middlewares/errorHandler');
 
 /**
  * POST /api/auth/register
@@ -87,7 +89,11 @@ const logout = asyncHandler(async (req, res) => {
  * Protected — return current user profile
  */
 const getMe = asyncHandler(async (req, res) => {
-  return sendSuccess(res, HTTP_STATUS.OK, 'User profile fetched', { user: req.user });
+  const user = await User.findById(req.user.id);
+  if (!user) {
+    throw new AppError('User not found', 404);
+  }
+  return sendSuccess(res, HTTP_STATUS.OK, 'User profile fetched', { user: user.toSafeObject() });
 });
 
 module.exports = { register, login, refresh, logout, getMe };

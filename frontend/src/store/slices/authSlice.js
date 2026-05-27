@@ -45,12 +45,22 @@ export const refreshToken = createAsyncThunk('auth/refresh', async (_, { rejectW
   }
 });
 
+export const initializeAuth = createAsyncThunk('auth/initialize', async (_, { rejectWithValue }) => {
+  try {
+    const data = await authApi.getMe();
+    return data;
+  } catch (err) {
+    return rejectWithValue('Not authenticated');
+  }
+});
+
 // ── Slice ─────────────────────────────────────────────────────────────────────
 
 const initialState = {
   user: null,
-  accessToken: null,  // Stored in memory — not localStorage (XSS protection)
+  accessToken: null,
   isAuthenticated: false,
+  isInitialized: false, // Prevents premature redirects on page load
   isLoading: false,
   error: null,
 };
@@ -131,6 +141,23 @@ const authSlice = createSlice({
         state.accessToken = null;
         state.isAuthenticated = false;
       });
+
+    // Initialize
+    builder
+      .addCase(initializeAuth.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(initializeAuth.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload.data.user;
+        state.isAuthenticated = true;
+        state.isInitialized = true;
+      })
+      .addCase(initializeAuth.rejected, (state) => {
+        state.isLoading = false;
+        state.isAuthenticated = false;
+        state.isInitialized = true;
+      });
   },
 });
 
@@ -140,6 +167,7 @@ export const { setAccessToken, clearAuth, clearError } = authSlice.actions;
 export const selectCurrentUser = (state) => state.auth.user;
 export const selectAccessToken = (state) => state.auth.accessToken;
 export const selectIsAuthenticated = (state) => state.auth.isAuthenticated;
+export const selectIsInitialized = (state) => state.auth.isInitialized;
 export const selectAuthLoading = (state) => state.auth.isLoading;
 export const selectAuthError = (state) => state.auth.error;
 export const selectUserRole = (state) => state.auth.user?.role;

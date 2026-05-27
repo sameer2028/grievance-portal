@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 
 const NotFoundPage = () => (
-  <div className="min-h-screen flex flex-col items-center justify-center text-center px-6 bg-gray-50">
-    <p className="text-8xl font-black text-primary-100 select-none">404</p>
-    <h1 className="text-2xl font-bold text-gray-900 mt-4 mb-2">Page not found</h1>
-    <p className="text-gray-500 mb-8 max-w-sm">
+  <div className="min-h-screen flex flex-col items-center justify-center text-center px-6 bg-gray-50 dark:bg-gray-900">
+    <p className="text-8xl font-black text-primary-100 dark:text-primary-900/50 select-none">404</p>
+    <h1 className="text-2xl font-bold text-gray-900 dark:text-white mt-4 mb-2">Page not found</h1>
+    <p className="text-gray-500 dark:text-gray-400 mb-8 max-w-sm">
       The page you're looking for doesn't exist or you don't have access to it.
     </p>
     <div className="flex gap-3">

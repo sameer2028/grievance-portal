@@ -35,19 +35,19 @@ const Modal = ({ open, onClose, title, children, maxWidth = 'max-w-lg' }) => {
       onClick={(e) => { if (e.target === overlayRef.current) onClose(); }}
     >
       <div
-        className={`bg-white rounded-xl shadow-xl w-full ${maxWidth} animate-slide-up`}
+        className={`bg-white dark:bg-gray-800 rounded-xl shadow-xl dark:shadow-none dark:border dark:border-gray-700 w-full ${maxWidth} animate-slide-up`}
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-          <h2 id="modal-title" className="text-base font-semibold text-gray-900">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+          <h2 id="modal-title" className="text-base font-semibold text-gray-900 dark:text-white">
             {title}
           </h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 text-xl leading-none p-1"
+            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 text-xl leading-none p-1"
             aria-label="Close modal"
           >
             ×

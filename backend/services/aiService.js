@@ -1,6 +1,7 @@
 const axios = require('axios');
 const Grievance = require('../models/Grievance');
-const { PRIORITY_LEVELS, DEPARTMENTS } = require('../config/constants');
+const User = require('../models/User');
+const { PRIORITY_LEVELS, DEPARTMENTS, GRIEVANCE_STATUS, ROLES } = require('../config/constants');
 const logger = require('../utils/logger');
 
 const AI_SERVICE_URL = process.env.AI_SERVICE_URL || 'http://localhost:8000';
@@ -20,6 +21,30 @@ const urgencyToPriority = (urgencyScore) => {
   if (urgencyScore >= 0.6) return PRIORITY_LEVELS.HIGH;
   if (urgencyScore >= 0.35) return PRIORITY_LEVELS.MEDIUM;
   return PRIORITY_LEVELS.LOW;
+};
+
+/**
+ * Find the most suitable officer for a department (least busy).
+ */
+const findBestOfficerForDepartment = async (department) => {
+  const officers = await User.find({ role: ROLES.OFFICER, department, isActive: true });
+  if (!officers || officers.length === 0) return null;
+
+  let leastBusyOfficer = officers[0];
+  let minCount = Infinity;
+
+  for (const officer of officers) {
+    const count = await Grievance.countDocuments({
+      assignedTo: officer._id,
+      status: { $in: [GRIEVANCE_STATUS.ASSIGNED, GRIEVANCE_STATUS.IN_PROGRESS] }
+    });
+    if (count < minCount) {
+      minCount = count;
+      leastBusyOfficer = officer;
+    }
+  }
+  
+  return leastBusyOfficer;
 };
 
 /**
@@ -50,9 +75,17 @@ const analyzeGrievance = async (grievanceId, title, description) => {
       duplicate_of,
     } = response.data;
 
+    const categoryToUse = category || DEPARTMENTS.OTHER;
+    const priorityToUse = urgencyToPriority(urgency_score);
+
+    // Auto-assignment logic
+    const officer = await findBestOfficerForDepartment(categoryToUse);
+    const assignedTo = officer ? officer._id : null;
+    const finalStatus = officer ? GRIEVANCE_STATUS.ASSIGNED : GRIEVANCE_STATUS.PENDING;
+
     // Update the grievance with AI results
-    await Grievance.findByIdAndUpdate(grievanceId, {
-      'aiAnalysis.category': category || DEPARTMENTS.OTHER,
+    const updateData = {
+      'aiAnalysis.category': categoryToUse,
       'aiAnalysis.categoryConfidence': category_confidence,
       'aiAnalysis.sentiment': sentiment,
       'aiAnalysis.sentimentScore': sentiment_score,
@@ -62,14 +95,30 @@ const analyzeGrievance = async (grievanceId, title, description) => {
       'aiAnalysis.analysisStatus': 'completed',
       'aiAnalysis.analyzedAt': new Date(),
       // Auto-set department and priority from AI results
-      department: category || DEPARTMENTS.OTHER,
-      priority: urgencyToPriority(urgency_score),
-    });
+      department: categoryToUse,
+      priority: priorityToUse,
+    };
+
+    if (assignedTo) {
+      updateData.assignedTo = assignedTo;
+      updateData.status = finalStatus;
+    }
+
+    const updatedGrievance = await Grievance.findByIdAndUpdate(grievanceId, updateData, { new: true });
+
+    if (assignedTo && updatedGrievance) {
+      updatedGrievance.statusHistory.push({
+        status: finalStatus,
+        note: `Auto-assigned to officer ${officer.name} by AI based on department routing.`,
+      });
+      await updatedGrievance.save();
+    }
 
     logger.info(`AI analysis complete for grievance ${grievanceId}`, {
-      category,
+      category: categoryToUse,
       sentiment,
       urgencyScore: urgency_score,
+      assignedTo: assignedTo ? assignedTo.toString() : null,
     });
   } catch (error) {
     // AI service failure should NOT block grievance creation

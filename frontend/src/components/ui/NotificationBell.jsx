@@ -47,14 +47,14 @@ const NotificationBell = () => {
 
       {/* Dropdown */}
       {open && (
-        <div className="absolute right-0 top-full mt-2 w-80 bg-white rounded-xl shadow-xl border border-gray-200 z-50 animate-slide-up overflow-hidden">
+        <div className="absolute right-0 top-full mt-2 w-80 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 z-50 animate-slide-up overflow-hidden">
           {/* Header */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
-            <h3 className="text-sm font-semibold text-gray-900">Notifications</h3>
+          <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-gray-700">
+            <h3 className="text-sm font-semibold text-gray-900 dark:text-white">Notifications</h3>
             {unreadCount > 0 && (
               <button
                 onClick={markAllRead}
-                className="text-xs text-primary-600 hover:text-primary-800 font-medium"
+                className="text-xs text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 font-medium"
               >
                 Mark all read
               </button>
@@ -62,9 +62,9 @@ const NotificationBell = () => {
           </div>
 
           {/* List */}
-          <div className="max-h-80 overflow-y-auto divide-y divide-gray-50">
+          <div className="max-h-80 overflow-y-auto divide-y divide-gray-50 dark:divide-gray-700">
             {notifications.length === 0 ? (
-              <div className="px-4 py-8 text-center text-sm text-gray-400">
+              <div className="px-4 py-8 text-center text-sm text-gray-400 dark:text-gray-500">
                 No notifications yet
               </div>
             ) : (
@@ -72,18 +72,18 @@ const NotificationBell = () => {
                 <div
                   key={n._id}
                   onClick={() => handleNotificationClick(n)}
-                  className={`flex gap-3 px-4 py-3 cursor-pointer hover:bg-gray-50 transition-colors ${
-                    !n.isRead ? 'bg-blue-50/50' : ''
+                  className={`flex gap-3 px-4 py-3 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors ${
+                    !n.isRead ? 'bg-blue-50/50 dark:bg-primary-900/10' : ''
                   }`}
                 >
                   <span className="text-lg shrink-0 mt-0.5">
                     {TYPE_ICONS[n.type] || '📌'}
                   </span>
                   <div className="min-w-0 flex-1">
-                    <p className={`text-sm leading-snug ${!n.isRead ? 'font-medium text-gray-900' : 'text-gray-700'}`}>
+                    <p className={`text-sm leading-snug ${!n.isRead ? 'font-medium text-gray-900 dark:text-gray-100' : 'text-gray-700 dark:text-gray-300'}`}>
                       {n.message}
                     </p>
-                    <p className="text-xs text-gray-400 mt-0.5">{timeAgo(n.createdAt)}</p>
+                    <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">{timeAgo(n.createdAt)}</p>
                   </div>
                   {!n.isRead && (
                     <div className="w-2 h-2 bg-primary-500 rounded-full mt-1.5 shrink-0" />
@@ -94,11 +94,11 @@ const NotificationBell = () => {
           </div>
 
           {/* Footer */}
-          <div className="px-4 py-2.5 border-t border-gray-100 text-center">
+          <div className="px-4 py-2.5 border-t border-gray-100 dark:border-gray-700 text-center bg-gray-50 dark:bg-gray-800/50">
             <Link
               to="/notifications"
               onClick={() => setOpen(false)}
-              className="text-xs text-primary-600 font-medium hover:text-primary-800"
+              className="text-xs text-primary-600 dark:text-primary-400 font-medium hover:text-primary-800 dark:hover:text-primary-300"
             >
               View all notifications →
             </Link>

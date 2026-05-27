@@ -25,6 +25,11 @@ const grievanceSchema = new mongoose.Schema(
       type: [String],
       default: [],
     },
+    imageHash: {
+      type: String,
+      default: null,
+      select: false, // Don't normally send it to the frontend to keep payloads small
+    },
 
     // ─── Location ──────────────────────────────────────────────────────────────
     location: {
@@ -144,7 +149,7 @@ grievanceSchema.index({ department: 1 });
 grievanceSchema.index({ priority: 1 });
 grievanceSchema.index({ submittedBy: 1 });
 grievanceSchema.index({ assignedTo: 1 });
-grievanceSchema.index({ ticketNumber: 1 });
+
 grievanceSchema.index({ createdAt: -1 });
 grievanceSchema.index({ 'location.coordinates': '2dsphere' }); // Geospatial queries
 grievanceSchema.index({ 'aiAnalysis.analysisStatus': 1 });

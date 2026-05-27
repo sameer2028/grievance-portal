@@ -69,7 +69,7 @@ const feedbackSchema = new mongoose.Schema(
   }
 );
 
-feedbackSchema.index({ grievance: 1 });
+
 feedbackSchema.index({ submittedBy: 1 });
 
 const Feedback = mongoose.model('Feedback', feedbackSchema);

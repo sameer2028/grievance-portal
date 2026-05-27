@@ -47,8 +47,8 @@ const TrackGrievancePage = () => {
         {/* Header */}
         <div className="text-center mb-8">
           <span className="text-4xl">🔍</span>
-          <h1 className="text-2xl font-bold text-gray-900 mt-3 mb-2">Track Your Grievance</h1>
-          <p className="text-gray-500 text-sm">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mt-3 mb-2">Track Your Grievance</h1>
+          <p className="text-gray-500 dark:text-gray-400 text-sm">
             Enter your ticket number to get the latest status — no login required.
           </p>
         </div>
@@ -72,7 +72,7 @@ const TrackGrievancePage = () => {
 
         {/* Error */}
         {error && (
-          <div className="mb-5 px-4 py-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700 text-center animate-fade-in">
+          <div className="mb-5 px-4 py-3 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg text-sm text-red-700 dark:text-red-300 text-center animate-fade-in">
             {error}
           </div>
         )}
@@ -83,43 +83,43 @@ const TrackGrievancePage = () => {
             {/* Ticket header card */}
             <div className="card">
               <div className="flex flex-wrap items-center gap-2 mb-4">
-                <span className="font-mono text-xs bg-gray-100 text-gray-500 px-2 py-1 rounded">
+                <span className="font-mono text-xs bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 px-2 py-1 rounded">
                   {grievance.ticketNumber}
                 </span>
                 <StatusBadge status={grievance.status} />
                 <PriorityBadge priority={grievance.priority} />
               </div>
 
-              <h2 className="font-semibold text-gray-900 mb-3">{grievance.title}</h2>
+              <h2 className="font-semibold text-gray-900 dark:text-white mb-3">{grievance.title}</h2>
 
               <div className="grid grid-cols-2 gap-3 text-sm">
                 <div>
-                  <p className="text-xs text-gray-400 uppercase tracking-wide font-medium">Department</p>
-                  <p className="text-gray-700 mt-0.5">{snakeToTitle(grievance.department)}</p>
+                  <p className="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wide font-medium">Department</p>
+                  <p className="text-gray-700 dark:text-gray-300 mt-0.5">{snakeToTitle(grievance.department)}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-400 uppercase tracking-wide font-medium">Priority</p>
-                  <p className="text-gray-700 capitalize mt-0.5">{grievance.priority}</p>
+                  <p className="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wide font-medium">Priority</p>
+                  <p className="text-gray-700 dark:text-gray-300 capitalize mt-0.5">{grievance.priority}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-400 uppercase tracking-wide font-medium">Submitted</p>
-                  <p className="text-gray-700 mt-0.5">{formatDate(grievance.createdAt)}</p>
+                  <p className="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wide font-medium">Submitted</p>
+                  <p className="text-gray-700 dark:text-gray-300 mt-0.5">{formatDate(grievance.createdAt)}</p>
                 </div>
                 {grievance.resolvedAt && (
                   <div>
-                    <p className="text-xs text-gray-400 uppercase tracking-wide font-medium">Resolved</p>
-                    <p className="text-gray-700 mt-0.5">{formatDate(grievance.resolvedAt)}</p>
+                    <p className="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wide font-medium">Resolved</p>
+                    <p className="text-gray-700 dark:text-gray-300 mt-0.5">{formatDate(grievance.resolvedAt)}</p>
                   </div>
                 )}
               </div>
 
               {/* Official response */}
               {grievance.officialResponse && (
-                <div className="mt-4 pt-4 border-t border-gray-100">
-                  <p className="text-xs text-gray-400 uppercase tracking-wide font-medium mb-1">
+                <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700">
+                  <p className="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wide font-medium mb-1">
                     Official Response
                   </p>
-                  <p className="text-sm text-gray-700 leading-relaxed">
+                  <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
                     {grievance.officialResponse}
                   </p>
                 </div>
@@ -129,14 +129,14 @@ const TrackGrievancePage = () => {
             {/* Timeline */}
             {grievance.statusHistory?.length > 0 && (
               <div className="card">
-                <h3 className="font-semibold text-gray-900 mb-4 text-sm">Progress Timeline</h3>
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-4 text-sm">Progress Timeline</h3>
                 <GrievanceStatusTimeline history={grievance.statusHistory} />
               </div>
             )}
 
             {/* CTA for registered users */}
-            <div className="text-center text-sm text-gray-500 py-2">
-              <a href="/register" className="text-primary-600 hover:underline font-medium">
+            <div className="text-center text-sm text-gray-500 dark:text-gray-400 py-2">
+              <a href="/register" className="text-primary-600 dark:text-primary-400 hover:underline font-medium">
                 Create an account
               </a>{' '}
               to submit and manage your own grievances.

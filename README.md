@@ -60,3 +60,21 @@ npm run dev
 ## Environment Variables
 
 See `.env.example` in each service folder.
+
+## Testing Accounts
+
+**Super Admin**
+- Email: `admin@grievance.gov.in`
+- Password: `Admin@1234`
+
+**Department Officers** (Password is `1234` for all)
+- Water Supply: `water@gov.in`
+- Electricity: `electricity@gov.in`
+- Roads & Infrastructure: `roads@gov.in`
+- Sanitation: `sanitation@gov.in`
+- Health: `health@gov.in`
+- Education: `education@gov.in`
+- Transport: `transport@gov.in`
+- Revenue: `revenue@gov.in`
+- Police: `police@gov.in`
+- Other: `other@gov.in`

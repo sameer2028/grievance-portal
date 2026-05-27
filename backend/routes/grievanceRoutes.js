@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
 
 const grievanceController = require('../controllers/grievanceController');
 const { protect, authorize } = require('../middlewares/auth');
@@ -18,6 +19,21 @@ const {
 router.get('/track/:ticketNumber', grievanceController.trackByTicket);
 
 // ── Citizen ────────────────────────────────────────────────────────────────────
+
+// Set up multer for memory storage
+const upload = multer({ 
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 10 * 1024 * 1024 } // 10MB limit
+});
+
+// Analyze image for auto-fill
+router.post(
+  '/analyze-image',
+  protect,
+  authorize(ROLES.CITIZEN),
+  upload.single('image'),
+  grievanceController.analyzeImage
+);
 
 // Submit a new grievance
 router.post(
