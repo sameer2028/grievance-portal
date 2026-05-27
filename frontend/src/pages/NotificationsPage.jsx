@@ -90,9 +90,9 @@ const NotificationsPage = () => {
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Notifications</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Notifications</h1>
           {unreadCount > 0 && (
-            <p className="text-sm text-primary-600 font-medium mt-0.5">{unreadCount} unread</p>
+            <p className="text-sm text-primary-600 dark:text-primary-400 font-medium mt-0.5">{unreadCount} unread</p>
           )}
         </div>
         <div className="flex gap-2">
@@ -141,13 +141,13 @@ const NotificationsPage = () => {
                       </span>
                       <span className="text-xs text-gray-400 ml-auto">{timeAgo(n.createdAt)}</span>
                     </div>
-                    <p className={`text-sm leading-snug ${n.isRead ? 'text-gray-600' : 'text-gray-900 font-medium'}`}>
+                    <p className={`text-sm leading-snug ${n.isRead ? 'text-gray-600 dark:text-gray-400' : 'text-gray-900 dark:text-gray-100 font-medium'}`}>
                       {n.message}
                     </p>
                     {n.link && (
                       <Link
                         to={n.link}
-                        className="text-xs text-primary-600 hover:text-primary-800 font-medium mt-1 inline-block"
+                        className="text-xs text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 font-medium mt-1 inline-block"
                         onClick={() => !n.isRead && handleMarkRead(n._id)}
                       >
                         View →

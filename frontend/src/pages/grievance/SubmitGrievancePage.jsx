@@ -92,14 +92,14 @@ const SubmitGrievancePage = () => {
     <div className="max-w-2xl mx-auto animate-fade-in">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Submit a Grievance</h1>
-        <p className="text-gray-500 mt-1 text-sm">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Submit a Grievance</h1>
+        <p className="text-gray-500 dark:text-gray-400 mt-1 text-sm">
           Describe your issue clearly. Our AI will automatically classify and route it to the right department.
         </p>
       </div>
 
       {/* AI info banner */}
-      <div className="mb-6 px-4 py-3 bg-violet-50 border border-violet-200 rounded-lg flex items-start gap-3 text-sm text-violet-700">
+      <div className="mb-6 px-4 py-3 bg-violet-50 dark:bg-violet-900/20 border border-violet-200 dark:border-violet-800 rounded-lg flex items-start gap-3 text-sm text-violet-700 dark:text-violet-300">
         <span className="text-lg shrink-0">🤖</span>
         <div>
           <strong>AI-powered routing:</strong> After submission, our system will automatically
@@ -110,14 +110,14 @@ const SubmitGrievancePage = () => {
       <form onSubmit={handleSubmit} noValidate className="space-y-5">
         {/* API error */}
         {apiError && (
-          <div className="px-4 py-3 bg-red-50 border border-red-200 rounded-md text-sm text-red-700">
+          <div className="px-4 py-3 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-md text-sm text-red-700 dark:text-red-300">
             {apiError}
           </div>
         )}
 
         {/* Title */}
         <div className="card !p-5 space-y-4">
-          <h2 className="font-semibold text-gray-900 text-base border-b border-gray-100 pb-3">
+          <h2 className="font-semibold text-gray-900 dark:text-white text-base border-b border-gray-100 dark:border-gray-700 pb-3">
             Grievance Details
           </h2>
 
@@ -212,7 +212,7 @@ const SubmitGrievancePage = () => {
             <label className="label">State</label>
             <input
               type="text" value="Uttar Pradesh" disabled
-              className="input bg-gray-50 text-gray-500 cursor-not-allowed"
+              className="input bg-gray-50 dark:bg-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed"
             />
           </div>
         </div>

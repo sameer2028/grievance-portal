@@ -16,9 +16,9 @@ const STATUS_COLORS = {
 const CustomTooltip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null;
   return (
-    <div className="bg-white border border-gray-200 rounded-lg shadow-lg px-3 py-2 text-sm">
-      <p className="font-medium text-gray-900">{STATUS_LABELS[label] || label}</p>
-      <p className="text-primary-600 font-bold">{payload[0].value} grievances</p>
+    <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg px-3 py-2 text-sm">
+      <p className="font-medium text-gray-900 dark:text-gray-100">{STATUS_LABELS[label] || label}</p>
+      <p className="text-primary-600 dark:text-primary-400 font-bold">{payload[0].value} grievances</p>
     </div>
   );
 };
@@ -50,7 +50,7 @@ const StatusBarChart = ({ data = [] }) => {
           axisLine={false}
           tickLine={false}
         />
-        <Tooltip content={<CustomTooltip />} cursor={{ fill: '#f9fafb' }} />
+        <Tooltip content={<CustomTooltip />} cursor={{ fill: 'transparent' }} />
         <Bar dataKey="count" radius={[4, 4, 0, 0]} maxBarSize={48}>
           {formatted.map((entry) => (
             <Cell

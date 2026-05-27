@@ -43,14 +43,14 @@ const LoginPage = () => {
           <div className="w-12 h-12 bg-primary-600 rounded-xl flex items-center justify-center mx-auto mb-4">
             <span className="text-white text-xl font-bold">G</span>
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">Welcome back</h1>
-          <p className="text-gray-500 mt-1 text-sm">Sign in to your grievance portal account</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Welcome back</h1>
+          <p className="text-gray-500 dark:text-gray-400 mt-1 text-sm">Sign in to your grievance portal account</p>
         </div>
 
         <div className="card animate-fade-in">
           {/* API error banner */}
           {error && (
-            <div className="mb-4 px-4 py-3 bg-red-50 border border-red-200 rounded-md text-sm text-red-700">
+            <div className="mb-4 px-4 py-3 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-md text-sm text-red-700 dark:text-red-300">
               {error}
             </div>
           )}
@@ -108,16 +108,16 @@ const LoginPage = () => {
             </button>
           </form>
 
-          <div className="mt-5 pt-5 border-t border-gray-100 text-center text-sm text-gray-500">
+          <div className="mt-5 pt-5 border-t border-gray-100 dark:border-gray-700 text-center text-sm text-gray-500 dark:text-gray-400">
             Don't have an account?{' '}
-            <Link to="/register" className="text-primary-600 font-medium hover:text-primary-800">
+            <Link to="/register" className="text-primary-600 dark:text-primary-400 font-medium hover:text-primary-800 dark:hover:text-primary-300">
               Create one
             </Link>
           </div>
         </div>
 
         {/* Demo credentials hint */}
-        <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-md text-xs text-amber-700">
+        <div className="mt-4 p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-md text-xs text-amber-700 dark:text-amber-300">
           <strong>Demo:</strong> Register a new account, or ask your admin for officer credentials.
         </div>
       </div>
