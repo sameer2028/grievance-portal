@@ -51,7 +51,7 @@ const SentimentChart = ({ data = [] }) => {
           />
           <Tooltip
             formatter={(v, _, props) => [`${v} (${props.payload.pct}%)`, 'Count']}
-            cursor={{ fill: '#f9fafb' }}
+            cursor={{ fill: 'transparent' }}
           />
           <Bar dataKey="count" radius={[0, 4, 4, 0]} maxBarSize={28}>
             {formatted.map((entry) => (
@@ -69,8 +69,8 @@ const SentimentChart = ({ data = [] }) => {
         {formatted.map((d) => (
           <div key={d.name} className="text-center">
             <span className="text-lg">{SENTIMENT_ICONS[d.name]}</span>
-            <p className="text-sm font-bold text-gray-900">{d.pct}%</p>
-            <p className="text-xs text-gray-400 capitalize">{d.name}</p>
+            <p className="text-sm font-bold text-gray-900 dark:text-gray-100">{d.pct}%</p>
+            <p className="text-xs text-gray-400 dark:text-gray-500 capitalize">{d.name}</p>
           </div>
         ))}
       </div>

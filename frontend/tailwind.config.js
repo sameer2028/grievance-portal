@@ -5,6 +5,20 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Custom premium midnight navy-slate gray scale for beautiful dark mode
+        gray: {
+          50: '#f8fafc',  // cool slate-white
+          100: '#f1f5f9', // cool off-white
+          200: '#e2e8f0', // cool light gray
+          300: '#cbd5e1', // cool gray border
+          400: '#94a3b8', // cool muted text
+          500: '#64748b', // cool medium text
+          600: '#475569', // cool dark text
+          700: '#1b253b', // premium slate border color for dark mode (replaces dark:border-gray-700)
+          800: '#0b1329', // gorgeous rich dark navy-slate card & sidebar background (replaces dark:bg-gray-800)
+          900: '#040714', // gorgeous deep midnight-blue/black background (replaces dark:bg-gray-900)
+          950: '#020308', // ultimate pitch-black midnight
+        },
         // Primary brand color — government blue
         primary: {
           50:  '#eff6ff',
@@ -23,6 +37,14 @@ export default {
         warning: '#d97706',
         danger:  '#dc2626',
         info:    '#0891b2',
+        // Dark mode colors
+        dark: {
+          bg: '#040714',         // deep midnight-blue
+          card: '#0b1329',       // dark navy-slate
+          border: '#1b253b',     // slate border
+          'text-main': '#f1f5f9',
+          'text-muted': '#94a3b8',
+        },
       },
 
       fontFamily: {

@@ -13,12 +13,12 @@ const COLORS = [
 const CustomTooltip = ({ active, payload }) => {
   if (!active || !payload?.length) return null;
   return (
-    <div className="bg-white border border-gray-200 rounded-lg shadow-lg px-3 py-2 text-sm">
-      <p className="font-medium text-gray-900">
+    <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg px-3 py-2 text-sm">
+      <p className="font-medium text-gray-900 dark:text-gray-100">
         {DEPARTMENT_LABELS[payload[0].name] || snakeToTitle(payload[0].name)}
       </p>
-      <p className="text-primary-600 font-bold">{payload[0].value} grievances</p>
-      <p className="text-gray-400">{payload[0].payload.percent}%</p>
+      <p className="text-primary-600 dark:text-primary-400 font-bold">{payload[0].value} grievances</p>
+      <p className="text-gray-400 dark:text-gray-500">{payload[0].payload.percent}%</p>
     </div>
   );
 };
@@ -26,7 +26,7 @@ const CustomTooltip = ({ active, payload }) => {
 const CustomLegend = ({ payload }) => (
   <ul className="flex flex-wrap gap-x-4 gap-y-1 justify-center mt-2">
     {payload.map((entry) => (
-      <li key={entry.value} className="flex items-center gap-1.5 text-xs text-gray-600">
+      <li key={entry.value} className="flex items-center gap-1.5 text-xs text-gray-600 dark:text-gray-400">
         <span
           className="w-2.5 h-2.5 rounded-full shrink-0"
           style={{ backgroundColor: entry.color }}

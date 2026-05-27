@@ -6,6 +6,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { getInitials, snakeToTitle } from '@/utils/helpers';
 import Spinner from '@/components/ui/Spinner';
 import NotificationBell from '@/components/ui/NotificationBell';
+import ThemeToggle from '@/components/ui/ThemeToggle';
 
 const NAV_GROUPS = [
   {
@@ -47,23 +48,23 @@ const AdminLayout = () => {
   const navLinkClass = ({ isActive }) =>
     `flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
       isActive
-        ? 'bg-primary-50 text-primary-700'
-        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+        ? 'bg-primary-50 text-primary-700 dark:bg-primary-900/30 dark:text-primary-300'
+        : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-white/5 dark:hover:text-gray-100'
     }`;
 
   const sidebarContent = (
     <div className="flex flex-col h-full">
       {/* Logo + collapse toggle */}
-      <div className="h-16 flex items-center px-4 border-b border-gray-200 gap-3">
+      <div className="h-16 flex items-center px-4 border-b border-gray-200 dark:border-gray-700 gap-3">
         <div className="w-7 h-7 bg-primary-600 rounded flex items-center justify-center shrink-0">
           <span className="text-white text-xs font-bold">G</span>
         </div>
         {sidebarOpen && (
-          <span className="font-semibold text-gray-900 text-sm truncate">Admin Panel</span>
+          <span className="font-semibold text-gray-900 dark:text-gray-100 text-sm truncate">Admin Panel</span>
         )}
         <button
           onClick={() => dispatch(toggleSidebar())}
-          className="ml-auto text-gray-400 hover:text-gray-600 hidden lg:block"
+          className="ml-auto text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 hidden lg:block"
         >
           {sidebarOpen ? '‹' : '›'}
         </button>
@@ -74,7 +75,7 @@ const AdminLayout = () => {
         {NAV_GROUPS.map((group) => (
           <div key={group.label}>
             {sidebarOpen && (
-              <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider px-3 mb-1">
+              <p className="text-[10px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider px-3 mb-1">
                 {group.label}
               </p>
             )}
@@ -97,15 +98,15 @@ const AdminLayout = () => {
       </nav>
 
       {/* User + role */}
-      <div className="p-3 border-t border-gray-200">
+      <div className="p-3 border-t border-gray-200 dark:border-gray-700">
         {sidebarOpen && (
           <div className="flex items-center gap-3 px-2 py-2 mb-1">
-            <div className="w-8 h-8 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center text-xs font-bold shrink-0">
+            <div className="w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300 flex items-center justify-center text-xs font-bold shrink-0">
               {getInitials(user?.name)}
             </div>
             <div className="min-w-0">
-              <p className="text-sm font-medium text-gray-900 truncate">{user?.name}</p>
-              <p className="text-xs text-gray-500 capitalize">{snakeToTitle(role)}</p>
+              <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{user?.name}</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400 capitalize">{snakeToTitle(role)}</p>
             </div>
           </div>
         )}
@@ -113,7 +114,7 @@ const AdminLayout = () => {
           onClick={handleLogout}
           disabled={loggingOut}
           title="Logout"
-          className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-md transition-colors"
+          className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md transition-colors"
         >
           {loggingOut ? <Spinner size="sm" /> : <span className="shrink-0">→</span>}
           {sidebarOpen && (loggingOut ? 'Logging out...' : 'Logout')}
@@ -123,10 +124,10 @@ const AdminLayout = () => {
   );
 
   return (
-    <div className="h-screen overflow-hidden bg-gray-50 flex">
+    <div className="h-screen overflow-hidden bg-gray-50 dark:bg-gray-900 flex">
       {/* Desktop sidebar */}
       <aside
-        className={`hidden lg:flex flex-col bg-white border-r border-gray-200 transition-all duration-200 shrink-0 ${
+        className={`hidden lg:flex flex-col bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 transition-all duration-200 shrink-0 ${
           sidebarOpen ? 'w-56' : 'w-16'
         }`}
       >
@@ -135,7 +136,7 @@ const AdminLayout = () => {
 
       {/* Mobile sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 z-40 w-56 bg-white border-r border-gray-200 flex flex-col lg:hidden transition-transform duration-200 ${
+        className={`fixed inset-y-0 left-0 z-40 w-56 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col lg:hidden transition-transform duration-200 ${
           mobileOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
@@ -144,23 +145,24 @@ const AdminLayout = () => {
 
       {mobileOpen && (
         <div
-          className="fixed inset-0 z-30 bg-black/30 lg:hidden"
+          className="fixed inset-0 z-30 bg-black/50 dark:bg-black/60 lg:hidden"
           onClick={() => setMobileOpen(false)}
         />
       )}
 
       {/* Main */}
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="h-16 bg-white border-b border-gray-200 flex items-center px-4 gap-4 shrink-0">
+        <header className="h-16 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex items-center px-4 gap-4 shrink-0">
           <button
-            className="lg:hidden p-2 text-gray-500 hover:text-gray-900"
+            className="lg:hidden p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
             onClick={() => setMobileOpen(true)}
           >
             ☰
           </button>
           <div className="flex-1"/>
+          <ThemeToggle />
           <NotificationBell />
-          <span className="text-sm font-medium text-gray-500 hidden sm:block">
+          <span className="text-sm font-medium text-gray-500 dark:text-gray-400 hidden sm:block">
             {isAdmin ? 'Administrator' : 'Officer'} · {user?.department ? snakeToTitle(user.department) : 'All Departments'}
           </span>
         </header>

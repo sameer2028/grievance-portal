@@ -110,22 +110,22 @@ const GrievanceDetailPage = () => {
 
   return (
     <div className="max-w-3xl mx-auto animate-fade-in space-y-5">
-      <button onClick={() => navigate(-1)} className="text-sm text-gray-500 hover:text-gray-800 flex items-center gap-1">
+      <button onClick={() => navigate(-1)} className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 flex items-center gap-1">
         ← Back
       </button>
 
       {/* Header card */}
       <div className="card">
         <div className="flex flex-wrap items-center gap-2 mb-4">
-          <span className="text-xs font-mono bg-gray-100 text-gray-500 px-2 py-1 rounded">{ticketNumber}</span>
+          <span className="text-xs font-mono bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 px-2 py-1 rounded">{ticketNumber}</span>
           <StatusBadge status={status} />
           <PriorityBadge priority={priority} />
           <span className="ml-auto text-xs text-gray-400">{timeAgo(createdAt)}</span>
         </div>
 
-        <h1 className="text-xl font-bold text-gray-900 mb-3">{title}</h1>
+        <h1 className="text-xl font-bold text-gray-900 dark:text-white mb-3">{title}</h1>
 
-        <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-gray-500 mb-4">
+        <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-gray-500 dark:text-gray-400 mb-4">
           <span>🏢 {snakeToTitle(department)}</span>
           {location?.district && <span>📍 {location.district}{location.state ? `, ${location.state}` : ''}</span>}
           <span>📅 {formatDate(createdAt)}</span>
@@ -133,16 +133,16 @@ const GrievanceDetailPage = () => {
           <span>⏱ Open {daysOpen ?? 0} day{daysOpen !== 1 ? 's' : ''}</span>
         </div>
 
-        <p className="text-gray-700 leading-relaxed whitespace-pre-line mb-4">{description}</p>
+        <p className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line mb-4">{description}</p>
 
         {location?.address && (
-          <div className="text-sm text-gray-500 bg-gray-50 rounded-md px-3 py-2">
+          <div className="text-sm text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 rounded-md px-3 py-2">
             📍 {location.address}{location.pincode ? ` — ${location.pincode}` : ''}
           </div>
         )}
 
         {isStaff && submittedBy && (
-          <div className="mt-4 pt-4 border-t border-gray-100 flex flex-wrap gap-x-6 gap-y-1 text-sm text-gray-500">
+          <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 flex flex-wrap gap-x-6 gap-y-1 text-sm text-gray-500 dark:text-gray-400">
             <span><strong>Submitted by:</strong> {submittedBy.name} ({submittedBy.email})</span>
             {submittedBy.phone && <span>📞 {submittedBy.phone}</span>}
             {assignedTo && <span><strong>Assigned to:</strong> {assignedTo.name}</span>}
@@ -150,7 +150,7 @@ const GrievanceDetailPage = () => {
         )}
 
         {isStaff && (
-          <div className="mt-4 pt-4 border-t border-gray-100">
+          <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700">
             <button onClick={() => setStatusModalOpen(true)} className="btn-primary text-sm">
               Update Status
             </button>
@@ -163,9 +163,9 @@ const GrievanceDetailPage = () => {
         <div className="card border-l-4 border-green-500">
           <div className="flex items-center gap-2 mb-2">
             <span className="text-green-600">✅</span>
-            <h3 className="font-semibold text-gray-900">Official Response</h3>
+            <h3 className="font-semibold text-gray-900 dark:text-white">Official Response</h3>
           </div>
-          <p className="text-gray-700 text-sm leading-relaxed">{officialResponse}</p>
+          <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">{officialResponse}</p>
         </div>
       )}
 
@@ -189,7 +189,7 @@ const GrievanceDetailPage = () => {
       {/* Status Timeline */}
       {statusHistory?.length > 0 && (
         <div className="card">
-          <h3 className="font-semibold text-gray-900 mb-4">Status History</h3>
+          <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Status History</h3>
           <GrievanceStatusTimeline history={statusHistory} />
         </div>
       )}

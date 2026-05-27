@@ -7,7 +7,8 @@ import App from './App';
 import { store } from './store';
 import { setAccessToken, clearAuth } from './store/slices/authSlice';
 // Import the setup function from your axios file
-import { setupAxiosInterceptors } from './api/axiosInstance'; 
+import { setupAxiosInterceptors } from './api/axiosInstance';
+import ThemeProvider from './context/ThemeProvider';
 import './index.css';
 
 // Inject the store and actions BEFORE React renders. 
@@ -16,10 +17,12 @@ setupAxiosInterceptors(store, setAccessToken, clearAuth);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Provider>
+    <ThemeProvider>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
+    </ThemeProvider>
   </React.StrictMode>
 );

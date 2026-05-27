@@ -36,9 +36,9 @@ const MyGrievancesPage = () => {
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">My Grievances</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">My Grievances</h1>
           {pagination && (
-            <p className="text-sm text-gray-500 mt-0.5">
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
               {pagination.total} total
             </p>
           )}
@@ -58,7 +58,7 @@ const MyGrievancesPage = () => {
               className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
                 statusFilter === val
                   ? 'bg-primary-600 text-white'
-                  : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50'
+                  : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700'
               }`}
             >
               {label}

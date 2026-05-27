@@ -90,26 +90,26 @@ const ProfilePage = () => {
 
   return (
     <div className="max-w-2xl mx-auto animate-fade-in space-y-6">
-      <h1 className="text-2xl font-bold text-gray-900">My Profile</h1>
+      <h1 className="text-2xl font-bold text-gray-900 dark:text-white">My Profile</h1>
 
       {/* Profile card */}
       <div className="card flex items-center gap-5">
-        <div className="w-16 h-16 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center text-2xl font-bold shrink-0">
+        <div className="w-16 h-16 rounded-full bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300 flex items-center justify-center text-2xl font-bold shrink-0">
           {getInitials(profile.name)}
         </div>
         <div>
-          <p className="text-lg font-semibold text-gray-900">{profile.name}</p>
-          <p className="text-sm text-gray-500">{profile.email}</p>
+          <p className="text-lg font-semibold text-gray-900 dark:text-white">{profile.name}</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">{profile.email}</p>
           <div className="flex flex-wrap gap-2 mt-2">
-            <span className="badge bg-primary-100 text-primary-700 capitalize">
+            <span className="badge bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300 capitalize">
               {snakeToTitle(profile.role)}
             </span>
             {profile.department && (
-              <span className="badge bg-gray-100 text-gray-600">
+              <span className="badge bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">
                 {DEPARTMENT_LABELS[profile.department] || profile.department}
               </span>
             )}
-            <span className="badge bg-gray-100 text-gray-500">
+            <span className="badge bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400">
               Joined {formatDate(profile.createdAt)}
             </span>
           </div>
@@ -117,15 +117,15 @@ const ProfilePage = () => {
       </div>
 
       {/* Tab navigation */}
-      <div className="flex gap-1 bg-gray-100 rounded-lg p-1 w-fit">
+      <div className="flex gap-1 bg-gray-100 dark:bg-gray-800 rounded-lg p-1 w-fit">
         {TABS.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
               activeTab === tab.id
-                ? 'bg-white text-gray-900 shadow-sm'
-                : 'text-gray-600 hover:text-gray-900'
+                ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm'
+                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
             }`}
           >
             {tab.label}
@@ -136,7 +136,7 @@ const ProfilePage = () => {
       {/* Profile Info Tab */}
       {activeTab === 'profile' && (
         <div className="card animate-fade-in">
-          <h2 className="font-semibold text-gray-900 mb-5">Personal Information</h2>
+          <h2 className="font-semibold text-gray-900 dark:text-white mb-5">Personal Information</h2>
           <form onSubmit={handleProfileSave} className="space-y-4">
             <div>
               <label className="label">Full Name</label>
@@ -153,14 +153,14 @@ const ProfilePage = () => {
               <input
                 value={profile.email}
                 disabled
-                className="input bg-gray-50 text-gray-400 cursor-not-allowed"
+                className="input bg-gray-50 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed"
               />
               <p className="text-xs text-gray-400 mt-1">Email cannot be changed.</p>
             </div>
             <div>
               <label className="label">Mobile Number</label>
               <div className="flex">
-                <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+                <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-500 dark:text-gray-400 text-sm">
                   +91
                 </span>
                 <input
@@ -176,7 +176,7 @@ const ProfilePage = () => {
             {profile.jurisdiction?.length > 0 && (
               <div>
                 <label className="label">Jurisdiction</label>
-                <p className="text-sm text-gray-600">{profile.jurisdiction.join(', ')}</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">{profile.jurisdiction.join(', ')}</p>
                 <p className="text-xs text-gray-400 mt-1">Contact admin to update jurisdiction.</p>
               </div>
             )}
@@ -190,7 +190,7 @@ const ProfilePage = () => {
       {/* Change Password Tab */}
       {activeTab === 'password' && (
         <div className="card animate-fade-in">
-          <h2 className="font-semibold text-gray-900 mb-5">Change Password</h2>
+          <h2 className="font-semibold text-gray-900 dark:text-white mb-5">Change Password</h2>
           <form onSubmit={handlePasswordChange} className="space-y-4">
             <div>
               <label className="label">Current Password</label>

@@ -46,7 +46,7 @@ const EditCell = ({ value, onSave, loading }) => {
     <button
       onClick={() => setEditing(true)}
       disabled={loading}
-      className="text-sm text-gray-900 hover:text-primary-600 hover:underline font-medium"
+      className="text-sm text-gray-900 dark:text-gray-100 hover:text-primary-600 hover:underline font-medium"
       title="Click to edit"
     >
       {value}h
@@ -120,8 +120,8 @@ const SLAConfigPage = () => {
       {/* Header */}
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">SLA Configuration</h1>
-          <p className="text-sm text-gray-500 mt-1">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">SLA Configuration</h1>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
             Set resolution deadlines per department and priority. Grievances exceeding these limits are auto-escalated.
           </p>
         </div>
@@ -135,7 +135,7 @@ const SLAConfigPage = () => {
       </div>
 
       {/* Info banner */}
-      <div className="px-4 py-3 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-700 flex items-start gap-2">
+      <div className="px-4 py-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg text-sm text-blue-700 dark:text-blue-300 flex items-start gap-2">
         <span className="text-base shrink-0">ℹ️</span>
         <span>
           The escalation engine runs automatically every hour. Click any value to edit it inline.
@@ -150,22 +150,22 @@ const SLAConfigPage = () => {
           {departments.map((dept) => (
             <div key={dept} className="card !p-0 overflow-hidden">
               {/* Department header */}
-              <div className="px-5 py-3 bg-gray-50 border-b border-gray-200">
-                <h2 className="font-semibold text-gray-900 text-sm">
+              <div className="px-5 py-3 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+                <h2 className="font-semibold text-gray-900 dark:text-white text-sm">
                   {DEPARTMENT_LABELS[dept] || dept}
                 </h2>
               </div>
 
               <table className="min-w-full">
                 <thead>
-                  <tr className="border-b border-gray-100">
+                  <tr className="border-b border-gray-100 dark:border-gray-700">
                     <th className="px-5 py-2.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Priority</th>
                     <th className="px-5 py-2.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Resolution Deadline</th>
                     <th className="px-5 py-2.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Warning At</th>
                     <th className="px-5 py-2.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Status</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-100">
+                <tbody className="divide-y divide-gray-100 dark:divide-gray-700">
                   {PRIORITY_ORDER.map((priority) => {
                     const cfg = grouped[dept]?.[priority];
                     if (!cfg) return null;

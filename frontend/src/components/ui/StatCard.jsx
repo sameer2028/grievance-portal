@@ -11,20 +11,20 @@ import Spinner from './Spinner';
  *   trend     - { value: "+12%", up: true } (optional)
  *   loading   - bool
  */
-const StatCard = ({ label, value, icon, color = 'bg-gray-100', iconColor = 'text-gray-600', trend, loading = false }) => (
+const StatCard = ({ label, value, icon, color = 'bg-gray-100 dark:bg-gray-700', iconColor = 'text-gray-600 dark:text-gray-300', trend, loading = false }) => (
   <div className="card flex items-start gap-4">
-    <div className={`w-11 h-11 rounded-lg ${color} ${iconColor} flex items-center justify-center text-xl shrink-0`}>
+    <div className={`w-11 h-11 rounded-lg ${color} ${iconColor} flex items-center justify-center text-xl shrink-0 transition-colors`}>
       {icon}
     </div>
     <div className="min-w-0 flex-1">
-      <p className="text-xs font-medium text-gray-500 uppercase tracking-wide truncate">{label}</p>
+      <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide truncate">{label}</p>
       {loading ? (
         <Spinner size="sm" className="mt-2" />
       ) : (
-        <p className="text-2xl font-bold text-gray-900 mt-0.5">{value ?? '—'}</p>
+        <p className="text-2xl font-bold text-gray-900 dark:text-gray-100 mt-0.5">{value ?? '—'}</p>
       )}
       {trend && !loading && (
-        <p className={`text-xs mt-1 font-medium ${trend.up ? 'text-green-600' : 'text-red-500'}`}>
+        <p className={`text-xs mt-1 font-medium ${trend.up ? 'text-green-600 dark:text-green-400' : 'text-red-500 dark:text-red-400'}`}>
           {trend.up ? '↑' : '↓'} {trend.value}
         </p>
       )}

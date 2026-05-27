@@ -76,13 +76,13 @@ const RegisterPage = () => {
           <div className="w-12 h-12 bg-primary-600 rounded-xl flex items-center justify-center mx-auto mb-4">
             <span className="text-white text-xl font-bold">G</span>
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">Create your account</h1>
-          <p className="text-gray-500 mt-1 text-sm">Register to submit and track grievances</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Create your account</h1>
+          <p className="text-gray-500 dark:text-gray-400 mt-1 text-sm">Register to submit and track grievances</p>
         </div>
 
         <div className="card animate-fade-in">
           {error && (
-            <div className="mb-4 px-4 py-3 bg-red-50 border border-red-200 rounded-md text-sm text-red-700">
+            <div className="mb-4 px-4 py-3 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-md text-sm text-red-700 dark:text-red-300">
               {error}
             </div>
           )}
@@ -120,7 +120,7 @@ const RegisterPage = () => {
                 Mobile number <span className="text-gray-400 font-normal">(optional)</span>
               </label>
               <div className="flex">
-                <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+                <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-500 dark:text-gray-400 text-sm">
                   +91
                 </span>
                 <input
@@ -151,12 +151,12 @@ const RegisterPage = () => {
                       <div
                         key={i}
                         className={`h-1 flex-1 rounded-full transition-colors ${
-                          i <= strength.score ? strength.color : 'bg-gray-200'
+                          i <= strength.score ? strength.color : 'bg-gray-200 dark:bg-gray-600'
                         }`}
                       />
                     ))}
                   </div>
-                  <p className="text-xs text-gray-500">{strength.label}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">{strength.label}</p>
                 </div>
               )}
               {fieldErrors.password && <p className="mt-1 text-xs text-red-600">{fieldErrors.password}</p>}
@@ -189,7 +189,7 @@ const RegisterPage = () => {
                   }}
                   className="mt-0.5 rounded border-gray-300 text-primary-600"
                 />
-                <span className="text-sm text-gray-600">
+                <span className="text-sm text-gray-600 dark:text-gray-400">
                   I agree to the{' '}
                   <a href="#" className="text-primary-600 hover:underline">Terms of Service</a>{' '}
                   and{' '}
@@ -208,9 +208,9 @@ const RegisterPage = () => {
             </button>
           </form>
 
-          <div className="mt-5 pt-5 border-t border-gray-100 text-center text-sm text-gray-500">
+          <div className="mt-5 pt-5 border-t border-gray-100 dark:border-gray-700 text-center text-sm text-gray-500 dark:text-gray-400">
             Already have an account?{' '}
-            <Link to="/login" className="text-primary-600 font-medium hover:text-primary-800">
+            <Link to="/login" className="text-primary-600 dark:text-primary-400 font-medium hover:text-primary-800 dark:hover:text-primary-300">
               Sign in
             </Link>
           </div>

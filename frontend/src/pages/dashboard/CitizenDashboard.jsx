@@ -31,20 +31,20 @@ const CitizenDashboard = () => {
     <div className="max-w-4xl mx-auto space-y-6 animate-fade-in">
       {/* Welcome header */}
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
           Welcome back, {user?.name?.split(' ')[0]} 👋
         </h1>
-        <p className="text-gray-500 mt-1 text-sm">
+        <p className="text-gray-500 dark:text-gray-400 mt-1 text-sm">
           Here's an overview of your submitted grievances.
         </p>
       </div>
 
       {/* Stats row */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard label="Total Submitted"   value={stats.total}     icon="📋" color="bg-blue-100"   iconColor="text-blue-600"   loading={isLoading} />
-        <StatCard label="Pending Review"    value={stats.pending}   icon="🕐" color="bg-yellow-100" iconColor="text-yellow-600" loading={isLoading} />
-        <StatCard label="Resolved"          value={stats.resolved}  icon="✅" color="bg-green-100"  iconColor="text-green-600"  loading={isLoading} />
-        <StatCard label="Escalated"         value={stats.escalated} icon="🔺" color="bg-orange-100" iconColor="text-orange-600" loading={isLoading} />
+        <StatCard label="Total Submitted"   value={stats.total}     icon="📋" color="bg-blue-100 dark:bg-blue-900/40"   iconColor="text-blue-600 dark:text-blue-300"   loading={isLoading} />
+        <StatCard label="Pending Review"    value={stats.pending}   icon="🕐" color="bg-yellow-100 dark:bg-yellow-900/40" iconColor="text-yellow-600 dark:text-yellow-300" loading={isLoading} />
+        <StatCard label="Resolved"          value={stats.resolved}  icon="✅" color="bg-green-100 dark:bg-green-900/40"  iconColor="text-green-600 dark:text-green-300"  loading={isLoading} />
+        <StatCard label="Escalated"         value={stats.escalated} icon="🔺" color="bg-orange-100 dark:bg-orange-900/40" iconColor="text-orange-600 dark:text-orange-300" loading={isLoading} />
       </div>
 
       {/* Quick actions */}
@@ -53,38 +53,38 @@ const CitizenDashboard = () => {
           to="/grievances/submit"
           className="card flex items-center gap-4 hover:shadow-card-hover transition-shadow group"
         >
-          <div className="w-12 h-12 rounded-xl bg-primary-100 flex items-center justify-center text-2xl group-hover:bg-primary-200 transition-colors">
+          <div className="w-12 h-12 rounded-xl bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center text-2xl group-hover:bg-primary-200 dark:group-hover:bg-primary-900/50 transition-colors">
             ＋
           </div>
           <div>
-            <p className="font-semibold text-gray-900">Submit New Grievance</p>
-            <p className="text-sm text-gray-500">Report a public issue in your area</p>
+            <p className="font-semibold text-gray-900 dark:text-gray-100">Submit New Grievance</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Report a public issue in your area</p>
           </div>
-          <span className="ml-auto text-gray-300 group-hover:text-primary-600 transition-colors">→</span>
+          <span className="ml-auto text-gray-300 dark:text-gray-600 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">→</span>
         </Link>
 
         <Link
           to="/track"
           className="card flex items-center gap-4 hover:shadow-card-hover transition-shadow group"
         >
-          <div className="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center text-2xl group-hover:bg-green-200 transition-colors">
+          <div className="w-12 h-12 rounded-xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-2xl group-hover:bg-green-200 dark:group-hover:bg-green-900/50 transition-colors">
             🔍
           </div>
           <div>
-            <p className="font-semibold text-gray-900">Track by Ticket</p>
-            <p className="text-sm text-gray-500">Look up any grievance status</p>
+            <p className="font-semibold text-gray-900 dark:text-gray-100">Track by Ticket</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Look up any grievance status</p>
           </div>
-          <span className="ml-auto text-gray-300 group-hover:text-green-600 transition-colors">→</span>
+          <span className="ml-auto text-gray-300 dark:text-gray-600 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">→</span>
         </Link>
       </div>
 
       {/* Recent grievances */}
       <div>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-gray-900">Recent Grievances</h2>
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Recent Grievances</h2>
           <Link
             to="/grievances/my"
-            className="text-sm text-primary-600 hover:text-primary-800 font-medium"
+            className="text-sm text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 font-medium"
           >
             View all →
           </Link>

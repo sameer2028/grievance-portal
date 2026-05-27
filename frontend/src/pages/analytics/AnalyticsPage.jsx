@@ -58,37 +58,37 @@ const AnalyticsPage = () => {
   return (
     <div className="space-y-6 animate-fade-in">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Analytics</h1>
-        <p className="text-gray-500 text-sm mt-1">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Analytics</h1>
+        <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
           AI-enriched insights across all submitted grievances
         </p>
       </div>
 
       {/* Top KPIs */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard label="Total Grievances" value={summary?.total}        icon="📊" color="bg-blue-100"   iconColor="text-blue-600" />
-        <StatCard label="Resolution Rate"  value={resolutionRate}         icon="✅" color="bg-green-100"  iconColor="text-green-600" />
-        <StatCard label="Resolved"         value={resolvedCount}          icon="🏁" color="bg-teal-100"   iconColor="text-teal-600" />
-        <StatCard label="AI Analyzed"      value={summary?.total ?? 0}   icon="🤖" color="bg-violet-100" iconColor="text-violet-600" />
+        <StatCard label="Total Grievances" value={summary?.total}        icon="📊" color="bg-blue-100 dark:bg-blue-900/40"   iconColor="text-blue-600 dark:text-blue-300" />
+        <StatCard label="Resolution Rate"  value={resolutionRate}         icon="✅" color="bg-green-100 dark:bg-green-900/40"  iconColor="text-green-600 dark:text-green-300" />
+        <StatCard label="Resolved"         value={resolvedCount}          icon="🏁" color="bg-teal-100 dark:bg-teal-900/40"   iconColor="text-teal-600 dark:text-teal-300" />
+        <StatCard label="AI Analyzed"      value={summary?.total ?? 0}   icon="🤖" color="bg-violet-100 dark:bg-violet-900/40" iconColor="text-violet-600 dark:text-violet-300" />
       </div>
 
       {/* 7-day trend */}
       <div className="card">
-        <h2 className="text-sm font-semibold text-gray-900 mb-1">Submissions Trend — Last 7 Days</h2>
-        <p className="text-xs text-gray-500 mb-4">Daily grievance submission volume</p>
+        <h2 className="text-sm font-semibold text-gray-900 dark:text-white mb-1">Submissions Trend — Last 7 Days</h2>
+        <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">Daily grievance submission volume</p>
         <TrendLineChart data={summary?.recentTrend || []} />
       </div>
 
       {/* Status + Sentiment row */}
       <div className="grid lg:grid-cols-2 gap-5">
         <div className="card">
-          <h2 className="text-sm font-semibold text-gray-900 mb-4">Grievances by Status</h2>
+          <h2 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">Grievances by Status</h2>
           <StatusBarChart data={summary?.byStatus || []} />
         </div>
 
         <div className="card">
-          <h2 className="text-sm font-semibold text-gray-900 mb-1">Citizen Sentiment</h2>
-          <p className="text-xs text-gray-500 mb-4">
+          <h2 className="text-sm font-semibold text-gray-900 dark:text-white mb-1">Citizen Sentiment</h2>
+          <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">
             Based on AI sentiment analysis of grievance text
           </p>
           {sentiment.length > 0 ? (
@@ -104,12 +104,12 @@ const AnalyticsPage = () => {
       {/* Department + Priority row */}
       <div className="grid lg:grid-cols-2 gap-5">
         <div className="card">
-          <h2 className="text-sm font-semibold text-gray-900 mb-4">By Department</h2>
+          <h2 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">By Department</h2>
           <DepartmentPieChart data={summary?.byDepartment || []} />
         </div>
 
         <div className="card">
-          <h2 className="text-sm font-semibold text-gray-900 mb-4">Priority Breakdown</h2>
+          <h2 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">Priority Breakdown</h2>
           {summary?.byPriority?.length ? (
             <div className="space-y-3">
               {['critical', 'high', 'medium', 'low'].map((p) => {
@@ -125,10 +125,10 @@ const AnalyticsPage = () => {
                 return (
                   <div key={p}>
                     <div className="flex justify-between text-sm mb-1">
-                      <span className="font-medium capitalize text-gray-700">{p}</span>
-                      <span className="text-gray-500">{count} ({pct}%)</span>
+                      <span className="font-medium capitalize text-gray-700 dark:text-gray-300">{p}</span>
+                      <span className="text-gray-500 dark:text-gray-400">{count} ({pct}%)</span>
                     </div>
-                    <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                    <div className="h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
                       <div
                         className={`h-full rounded-full ${colors[p]} transition-all`}
                         style={{ width: `${pct}%` }}
@@ -147,7 +147,7 @@ const AnalyticsPage = () => {
       {/* Top departments table */}
       {topDepts.length > 0 && (
         <div className="card">
-          <h2 className="text-sm font-semibold text-gray-900 mb-4">
+          <h2 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">
             Most Active Departments
           </h2>
           <div className="space-y-3">
@@ -164,14 +164,14 @@ const AnalyticsPage = () => {
                     </span>
                     <div className="flex-1 min-w-0">
                       <div className="flex justify-between mb-1">
-                        <span className="text-sm font-medium text-gray-700 truncate">
+                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300 truncate">
                           {DEPARTMENT_LABELS[dept._id] || snakeToTitle(dept._id)}
                         </span>
                         <span className="text-xs text-gray-500 ml-2 shrink-0">
                           {dept.count} ({pct}%)
                         </span>
                       </div>
-                      <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                      <div className="h-1.5 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
                         <div
                           className="h-full bg-primary-500 rounded-full"
                           style={{ width: `${pct}%` }}
@@ -187,9 +187,9 @@ const AnalyticsPage = () => {
 
       {/* Map */}
       <div className="card !p-0 overflow-hidden">
-        <div className="px-5 py-4 border-b border-gray-200">
-          <h2 className="text-sm font-semibold text-gray-900">Geographic Heatmap</h2>
-          <p className="text-xs text-gray-500 mt-0.5">
+        <div className="px-5 py-4 border-b border-gray-200 dark:border-gray-700">
+          <h2 className="text-sm font-semibold text-gray-900 dark:text-white">Geographic Heatmap</h2>
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
             Circle size = priority level. Click a marker for details.
           </p>
         </div>

@@ -7,9 +7,9 @@ import { format, parseISO } from 'date-fns';
 const CustomTooltip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null;
   return (
-    <div className="bg-white border border-gray-200 rounded-lg shadow-lg px-3 py-2 text-sm">
-      <p className="text-gray-500 text-xs">{label}</p>
-      <p className="text-primary-600 font-bold">{payload[0].value} submitted</p>
+    <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg px-3 py-2 text-sm">
+      <p className="text-gray-500 dark:text-gray-400 text-xs">{label}</p>
+      <p className="text-primary-600 dark:text-primary-400 font-bold">{payload[0].value} submitted</p>
     </div>
   );
 };
