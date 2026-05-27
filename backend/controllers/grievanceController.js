@@ -1,20 +1,26 @@
-const { asyncHandler } = require('../middlewares/errorHandler');
+const { asyncHandler, AppError } = require('../middlewares/errorHandler');
 const { sendSuccess, sendError, sendPaginated } = require('../utils/apiResponse');
 const grievanceService = require('../services/grievanceService');
 const { HTTP_STATUS } = require('../config/constants');
+const crypto = require('crypto');
+const { GoogleGenAI } = require('@google/genai');
+const Grievance = require('../models/Grievance');
+const fs = require('fs');
+const path = require('path');
 
 /**
  * POST /api/grievances
  * Protected (citizen) — submit a new grievance
  */
 const createGrievance = asyncHandler(async (req, res) => {
-  const { title, description, location, attachments } = req.body;
+  const { title, description, location, attachments, imageHash } = req.body;
 
   const grievance = await grievanceService.createGrievance({
     title,
     description,
     location,
     attachments,
+    imageHash,
     submittedBy: req.user.id,
   });
 
@@ -122,6 +128,87 @@ const trackByTicket = asyncHandler(async (req, res) => {
   return sendSuccess(res, HTTP_STATUS.OK, 'Grievance found', { grievance });
 });
 
+/**
+ * POST /api/grievances/analyze-image
+ * Protected — Upload image, check for duplicates, analyze using Gemini
+ */
+const analyzeImage = asyncHandler(async (req, res) => {
+  if (!req.file) {
+    throw new AppError('No image uploaded', 400);
+  }
+
+  // 1. Calculate image hash
+  const hash = crypto.createHash('sha256').update(req.file.buffer).digest('hex');
+
+  // 2. Check for duplicate image
+  const existing = await Grievance.findOne({ imageHash: hash }).select('_id createdAt');
+  if (existing) {
+    throw new AppError('Duplicate image detected. This issue has already been reported.', 400);
+  }
+
+  // 3. Initialize Gemini
+  if (!process.env.GEMINI_API_KEY) {
+    throw new AppError('Gemini API key not configured', 500);
+  }
+
+  const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+  const mimeType = req.file.mimetype;
+  const base64Data = req.file.buffer.toString('base64');
+
+  // 4. Prompt Gemini
+  const prompt = `Analyze this image which a citizen is trying to submit as a civic grievance (e.g. broken road, garbage dump, water leak, broken streetlight).
+  
+If the image does NOT depict a valid civic issue (e.g. it is a selfie, a meme, a random screenshot, or a blank photo), respond with a JSON object: {"isRelevant": false}.
+
+If it IS a valid civic issue, respond with a JSON object:
+{
+  "isRelevant": true,
+  "title": "A short, concise title describing the problem (max 100 chars)",
+  "description": "A detailed explanation of the problem visible in the image."
+}`;
+
+  const response = await ai.models.generateContent({
+    model: 'gemini-2.5-flash',
+    contents: [
+      { role: 'user', parts: [
+        { text: prompt },
+        { inlineData: { mimeType, data: base64Data } }
+      ]}
+    ]
+  });
+
+  const text = response.text;
+  
+  // Extract JSON from response (handling potential markdown formatting)
+  let resultJSON;
+  try {
+    const jsonMatch = text.match(/```json\n([\s\S]*?)\n```/);
+    if (jsonMatch) {
+      resultJSON = JSON.parse(jsonMatch[1]);
+    } else {
+      resultJSON = JSON.parse(text);
+    }
+  } catch (err) {
+    throw new AppError('Failed to parse AI response', 500);
+  }
+
+  if (!resultJSON.isRelevant) {
+    throw new AppError('Irrelevant image detected. Please upload a clear photo of a civic issue.', 400);
+  }
+
+  // Save the valid image to disk
+  const ext = req.file.originalname.split('.').pop();
+  const filename = `${hash}-${Date.now()}.${ext}`;
+  const uploadPath = path.join(__dirname, '..', 'uploads', filename);
+  fs.writeFileSync(uploadPath, req.file.buffer);
+
+  // Return the hash and the new attachment path
+  resultJSON.imageHash = hash;
+  resultJSON.attachmentPath = `/uploads/${filename}`;
+
+  return sendSuccess(res, HTTP_STATUS.OK, 'Image analyzed successfully', resultJSON);
+});
+
 module.exports = {
   createGrievance,
   getAllGrievances,
@@ -130,4 +217,5 @@ module.exports = {
   updateGrievanceStatus,
   assignGrievance,
   trackByTicket,
+  analyzeImage,
 };

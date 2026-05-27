@@ -105,7 +105,7 @@ const GrievanceDetailPage = () => {
     ticketNumber, title, description, status, priority,
     department, location, createdAt, resolvedAt,
     submittedBy, assignedTo, officialResponse,
-    statusHistory, aiAnalysis, daysOpen,
+    statusHistory, aiAnalysis, daysOpen, attachments,
   } = grievance;
 
   return (
@@ -136,8 +136,25 @@ const GrievanceDetailPage = () => {
         <p className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line mb-4">{description}</p>
 
         {location?.address && (
-          <div className="text-sm text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 rounded-md px-3 py-2">
+          <div className="text-sm text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 rounded-md px-3 py-2 mb-4">
             📍 {location.address}{location.pincode ? ` — ${location.pincode}` : ''}
+          </div>
+        )}
+
+        {attachments && attachments.length > 0 && (
+          <div className="mb-4">
+            <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">Attached Proof</h3>
+            <div className="flex gap-4 overflow-x-auto pb-2">
+              {attachments.map((url, idx) => (
+                <a key={idx} href={url} target="_blank" rel="noopener noreferrer" className="shrink-0">
+                  <img 
+                    src={url} 
+                    alt={`Attachment ${idx + 1}`} 
+                    className="h-40 w-auto object-cover rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm hover:opacity-90 transition-opacity" 
+                  />
+                </a>
+              ))}
+            </div>
           </div>
         )}
 

@@ -11,6 +11,8 @@ import {
 } from '@/store/slices/grievanceSlice';
 import { useToast } from '@/hooks/useToast';
 import Spinner from '@/components/ui/Spinner';
+import { useRef } from 'react';
+import { grievanceApi } from '@/api/grievanceApi';
 
 const CHAR_LIMITS = { title: 200, description: 2000 };
 
@@ -41,6 +43,45 @@ const SubmitGrievancePage = () => {
     },
   });
   const [fieldErrors, setFieldErrors] = useState({});
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [imageHash, setImageHash] = useState(null);
+  const [attachmentPath, setAttachmentPath] = useState(null);
+  const [attachmentPreview, setAttachmentPreview] = useState(null);
+  const fileInputRef = useRef(null);
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      toast.error('Please upload an image file');
+      return;
+    }
+
+    setIsAnalyzing(true);
+    try {
+      const result = await grievanceApi.analyzeImage(file);
+      setForm(prev => ({
+        ...prev,
+        title: result.data.title || prev.title,
+        description: result.data.description || prev.description
+      }));
+      setImageHash(result.data.imageHash);
+      setAttachmentPath(result.data.attachmentPath);
+      setAttachmentPreview(URL.createObjectURL(file));
+      setFieldErrors(prev => ({ ...prev, image: '' }));
+
+      toast.success('AI successfully analyzed the image and pre-filled the details!');
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to analyze image');
+      if (fileInputRef.current) fileInputRef.current.value = '';
+      setImageHash(null);
+      setAttachmentPath(null);
+      setAttachmentPreview(null);
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
 
   // Handle success: show toast and redirect
   useEffect(() => {
@@ -57,6 +98,8 @@ const SubmitGrievancePage = () => {
 
   const validate = () => {
     const errs = {};
+    if (!imageHash)
+      errs.image = 'You must upload a photo of the issue to proceed.';
     if (!form.title.trim() || form.title.trim().length < 10)
       errs.title = 'Title must be at least 10 characters';
     if (!form.description.trim() || form.description.trim().length < 30)
@@ -71,7 +114,11 @@ const SubmitGrievancePage = () => {
     const errs = validate();
     if (Object.keys(errs).length) { setFieldErrors(errs); return; }
     setFieldErrors({});
-    dispatch(submitGrievance(form));
+    dispatch(submitGrievance({ 
+      ...form, 
+      imageHash,
+      attachments: attachmentPath ? [attachmentPath] : [] 
+    }));
   };
 
   const handleChange = (e) => {
@@ -104,6 +151,56 @@ const SubmitGrievancePage = () => {
         <div>
           <strong>AI-powered routing:</strong> After submission, our system will automatically
           classify your grievance, detect urgency, and route it to the appropriate department within seconds.
+        </div>
+      </div>
+
+      {/* AI Image Upload */}
+      <div className={`mb-6 card !p-5 border-dashed border-2 ${fieldErrors.image ? 'border-red-400 bg-red-50/50 dark:border-red-800 dark:bg-red-900/10' : 'border-primary-200 dark:border-primary-800 bg-primary-50/50 dark:bg-primary-900/10'} transition-colors`}>
+        <div className="text-center">
+          <div className="mb-3 text-3xl">📸</div>
+          <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Upload Issue Photo <span className="text-red-500">*</span></h3>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mb-4 max-w-lg mx-auto">
+            It is mandatory to attach proof of the issue. Our AI will automatically analyze the photo to write the title and description for you.
+          </p>
+
+          {attachmentPreview ? (
+            <div className="relative inline-block mt-2 mb-2">
+              <img src={attachmentPreview} alt="Preview" className="h-32 object-cover rounded-lg border border-gray-200 dark:border-gray-700" />
+              <button 
+                type="button" 
+                onClick={() => {
+                   setAttachmentPreview(null);
+                   setAttachmentPath(null);
+                   setImageHash(null);
+                   if (fileInputRef.current) fileInputRef.current.value = '';
+                }}
+                className="absolute -top-2 -right-2 bg-red-500 hover:bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs shadow"
+              >
+                ✕
+              </button>
+            </div>
+          ) : (
+            <>
+              <input 
+                type="file" 
+                accept="image/*"
+                className="hidden"
+                ref={fileInputRef}
+                onChange={handleImageUpload}
+                disabled={isAnalyzing}
+              />
+              <button 
+                type="button" 
+                onClick={() => fileInputRef.current?.click()}
+                disabled={isAnalyzing}
+                className="btn-secondary"
+              >
+                {isAnalyzing ? <><Spinner size="sm" /> Analyzing Image...</> : 'Select Photo'}
+              </button>
+            </>
+          )}
+
+          {fieldErrors.image && <p className="mt-2 text-sm text-red-600 font-medium">{fieldErrors.image}</p>}
         </div>
       </div>
 

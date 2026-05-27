@@ -18,34 +18,38 @@ const Comment = ({ comment, currentUserId, isStaff, onDelete }) => {
       <div className="flex-1 min-w-0">
         {/* Author + meta */}
         <div className="flex flex-wrap items-center gap-2 mb-1">
-          <span className="text-sm font-medium text-gray-900">{comment.author?.name}</span>
-          <span className="text-xs capitalize text-gray-400">{comment.author?.role}</span>
+          <span className="text-sm font-medium text-gray-900 dark:text-gray-100">{comment.author?.name}</span>
+          <span className="text-[10px] uppercase tracking-wide bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-1.5 py-0.5 rounded font-semibold">
+            {comment.author?.role?.replace('_', ' ')}
+          </span>
           {comment.isInternal && (
-            <span className="text-xs bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded font-medium">
+            <span className="text-[10px] uppercase tracking-wide bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 px-1.5 py-0.5 rounded font-semibold border border-amber-200 dark:border-amber-800">
               🔒 Internal
             </span>
           )}
-          <span className="text-xs text-gray-400 ml-auto">{timeAgo(comment.createdAt)}</span>
+          
+          <div className="ml-auto flex items-center gap-3">
+            <span className="text-xs text-gray-400 dark:text-gray-500">{timeAgo(comment.createdAt)}</span>
+            {(isOwn || isStaff) && (
+              <button
+                onClick={() => onDelete(comment._id)}
+                className="text-xs text-gray-400 hover:text-red-600 dark:text-gray-500 dark:hover:text-red-400 transition-colors"
+                title="Delete comment"
+              >
+                Delete
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Text */}
-        <div className={`text-sm text-gray-700 leading-relaxed p-3 rounded-lg ${
+        <div className={`text-sm text-gray-700 dark:text-gray-200 leading-relaxed p-3 rounded-lg mt-1.5 ${
           comment.isInternal
-            ? 'bg-amber-50 border border-amber-200'
-            : 'bg-gray-100'
+            ? 'bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/50'
+            : 'bg-gray-100 dark:bg-gray-800'
         }`}>
           {comment.text}
         </div>
-
-        {/* Delete */}
-        {(isOwn || isStaff) && (
-          <button
-            onClick={() => onDelete(comment._id)}
-            className="text-xs text-gray-400 hover:text-red-500 mt-1 transition-colors"
-          >
-            Delete
-          </button>
-        )}
       </div>
     </div>
   );
