@@ -5,8 +5,13 @@ const { HTTP_STATUS } = require('../config/constants');
 const crypto = require('crypto');
 const { GoogleGenAI } = require('@google/genai');
 const Grievance = require('../models/Grievance');
-const fs = require('fs');
-const path = require('path');
+const { v2: cloudinary } = require('cloudinary');
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
 /**
  * POST /api/grievances
@@ -196,15 +201,30 @@ If it IS a valid civic issue, respond with a JSON object:
     throw new AppError('Irrelevant image detected. Please upload a clear photo of a civic issue.', 400);
   }
 
-  // Save the valid image to disk
-  const ext = req.file.originalname.split('.').pop();
-  const filename = `${hash}-${Date.now()}.${ext}`;
-  const uploadPath = path.join(__dirname, '..', 'uploads', filename);
-  fs.writeFileSync(uploadPath, req.file.buffer);
+  // Upload the valid image to Cloudinary
+  const uploadToCloudinary = () => {
+    return new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        { folder: 'grievances' },
+        (error, result) => {
+          if (result) resolve(result);
+          else reject(error);
+        }
+      );
+      stream.end(req.file.buffer);
+    });
+  };
+
+  let cloudinaryResult;
+  try {
+    cloudinaryResult = await uploadToCloudinary();
+  } catch (error) {
+    throw new AppError('Failed to upload image to cloud storage', 500);
+  }
 
   // Return the hash and the new attachment path
   resultJSON.imageHash = hash;
-  resultJSON.attachmentPath = `/uploads/${filename}`;
+  resultJSON.attachmentPath = cloudinaryResult.secure_url;
 
   return sendSuccess(res, HTTP_STATUS.OK, 'Image analyzed successfully', resultJSON);
 });
