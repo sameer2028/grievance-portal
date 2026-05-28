@@ -80,7 +80,6 @@ export const setupAxiosInterceptors = (store, setAccessToken, clearAuth) => {
           processQueue(refreshError, null);
           // We use the injected dispatch and action!
           store.dispatch(clearAuth());
-          window.location.href = '/login';
           return Promise.reject(refreshError);
         } finally {
           isRefreshing = false;
