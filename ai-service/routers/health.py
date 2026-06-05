@@ -8,6 +8,7 @@ _start_time = time.time()
 
 
 @router.get("/health")
+@router.head("/health")
 async def health_check():
     """
     Returns status of the AI service and its loaded models.
