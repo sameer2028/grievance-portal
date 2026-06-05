@@ -38,6 +38,8 @@ TRAINING_DATA = [
     ("water tanker not coming water shortage colony no supply days", "water_supply"),
     ("sewage mixing with drinking water pipeline broken water pressure low", "water_supply"),
     ("overhead tank not filled water connection new apply", "water_supply"),
+    ("yellow foul smelling water from tap diarrhea unsafe consumption", "water_supply"),
+    ("water meter leak huge bill pipe crack flooding street", "water_supply"),
 
     # electricity
     ("power cut electricity no light transformer broken street light", "electricity"),
@@ -49,6 +51,7 @@ TRAINING_DATA = [
     ("unscheduled power cuts residential block transformer", "electricity"),
     ("severe voltage fluctuations damaged refrigerator appliances", "electricity"),
     ("transformer blew up power supply cut off wiring issue", "electricity"),
+    ("sparking overhead cables short circuit fire hazard grid failure", "electricity"),
 
     # roads_infrastructure
     ("road damaged pothole accident vehicle damage bad road", "roads_infrastructure"),
@@ -56,6 +59,9 @@ TRAINING_DATA = [
     ("footpath encroached broken sidewalk pedestrian unsafe", "roads_infrastructure"),
     ("bridge damaged overloaded traffic diversion road repair", "roads_infrastructure"),
     ("drainage blocked road flooding waterlogging during rain", "roads_infrastructure"),
+    ("catastrophic collapse bridge submerged river vehicles emergency disaster infrastructure", "roads_infrastructure"),
+    ("highway cave-in sinkhole traffic gridlock pavement cracked unsafe", "roads_infrastructure"),
+    ("flyover structural crack concrete falling hazard warning", "roads_infrastructure"),
 
     # sanitation
     ("garbage not collected waste pile up stench unhygienic area", "sanitation"),
@@ -63,6 +69,8 @@ TRAINING_DATA = [
     ("open defecation no toilet drainage blocked sewage smell", "sanitation"),
     ("garbage bin overflowing no sweeper cleaning area dirty", "sanitation"),
     ("drain choked sewage overflow smell disease mosquito breeding", "sanitation"),
+    ("biomedical waste dumped open hazardous medical waste hospital", "sanitation"),
+    ("dead animal rotting carcass street foul odor no removal", "sanitation"),
 
     # health
     ("hospital doctor absent medicine unavailable health center closed", "health"),
@@ -70,6 +78,8 @@ TRAINING_DATA = [
     ("vaccination camp not organized polio malaria dengue outbreak", "health"),
     ("government hospital dirty no staff no equipment", "health"),
     ("food adulteration contaminated food illness poisoning", "health"),
+    ("clinic expired medicine given wrong treatment medical negligence", "health"),
+    ("illegal ultrasound clinic quack fake doctor unregistered", "health"),
 
     # education
     ("school teacher absent no classes students affected education", "education"),
@@ -77,6 +87,8 @@ TRAINING_DATA = [
     ("midday meal not provided quality poor scholarship not received", "education"),
     ("no toilet in school girl students issue attendance dropping", "education"),
     ("teacher vacancy not filled school running without staff", "education"),
+    ("illegal fees collected private school donation capitation fee", "education"),
+    ("exams paper leaked cheating center mass copy board exam", "education"),
 
     # transport
     ("bus not running route cancelled public transport problem", "transport"),
@@ -84,6 +96,8 @@ TRAINING_DATA = [
     ("bus stop broken no shelter rain waiting dangerous", "transport"),
     ("traffic jam signal not working road blocked no traffic police", "transport"),
     ("railway station problem platform crowd train late passenger", "transport"),
+    ("metro train delay technical fault stranded passenger ticket issue", "transport"),
+    ("drunk bus driver rash driving speeding public transport unsafe", "transport"),
 
     # revenue
     ("land record wrong mutation pending property tax issue", "revenue"),
@@ -91,6 +105,8 @@ TRAINING_DATA = [
     ("ration card problem not issued benefits not received BPL", "revenue"),
     ("government scheme pension not received farmer compensation", "revenue"),
     ("land encroachment illegal construction complaint", "revenue"),
+    ("bribe demanded official patwari registry property documents", "revenue"),
+    ("survey plot boundary dispute government land grabbed", "revenue"),
 
     # police
     ("theft robbery crime no action police not responding FIR", "police"),
@@ -98,11 +114,15 @@ TRAINING_DATA = [
     ("domestic violence abuse woman child safety complaint police", "police"),
     ("noise pollution illegal activity complaint police inaction", "police"),
     ("accident hit and run vehicle complaint police", "police"),
+    ("cyber crime online fraud scam fake call police investigation", "police"),
+    ("drug peddling illegal liquor shop antisocial elements gathering", "police"),
 
     # other
     ("general complaint miscellaneous issue problem not categorized", "other"),
     ("festival permission denied cultural event approval", "other"),
     ("animal stray dog menace attack colony complaint", "other"),
+    ("website not working portal error online application fail", "other"),
+    ("unidentified flying object strange noise mysterious event", "other"),
 ]
 
 
