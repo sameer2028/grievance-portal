@@ -20,7 +20,7 @@
     min-height: 100vh;
   }
 
-  h1 { @apply text-3xl font-bold dark:text-white; }
+  h1 { @apply text-3xl font-extrabold tracking-tight dark:text-white; }
   h2 { @apply text-2xl font-semibold dark:text-white; }
   h3 { @apply text-xl font-semibold dark:text-white; }
   h4 { @apply text-lg font-medium dark:text-white; }
@@ -33,22 +33,33 @@
 
 /* ─── Components ────────────────────────────────────────────── */
 @layer components {
+  /* ── Glassmorphism card ─────────────────────────────────────── */
   .card {
-    @apply bg-white rounded-lg shadow-card p-6
-           dark:bg-gray-800 dark:shadow-none dark:border dark:border-gray-700;
+    @apply bg-white rounded-xl shadow-card p-6 border border-gray-100
+           transition-all duration-200;
+  }
+
+  /* Dark mode: frosted glass effect */
+  .dark .card {
+    background: rgba(11, 19, 41, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(148, 163, 184, 0.08);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25),
+                inset 0 1px 0 rgba(148, 163, 184, 0.05);
   }
 
   .btn {
     @apply inline-flex items-center justify-center gap-2
-           px-4 py-2 rounded-md font-medium text-sm
-           transition-all duration-150
+           px-4 py-2 rounded-lg font-medium text-sm
+           transition-all duration-200
            focus-visible:outline focus-visible:outline-2
            disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
   .btn-primary {
-    @apply btn bg-primary-600 text-white
-           hover:bg-primary-700 active:bg-primary-800
+    @apply btn bg-primary-600 text-white shadow-sm
+           hover:bg-primary-700 hover:shadow-md active:bg-primary-800
            dark:bg-primary-500 dark:hover:bg-primary-600 dark:active:bg-primary-700;
   }
 
@@ -65,7 +76,7 @@
   }
 
   .input {
-    @apply w-full px-3 py-2 text-sm rounded-md border border-gray-300
+    @apply w-full px-3 py-2 text-sm rounded-lg border border-gray-300
            bg-white placeholder:text-gray-400
            focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent
            transition-shadow duration-150
@@ -102,10 +113,37 @@
 
 /* ─── Utilities ─────────────────────────────────────────────── */
 @layer utilities {
-  .animate-fade-in  { animation: fadeIn 0.2s ease-in-out; }
-  .animate-slide-up { animation: slideUp 0.3s ease-out; }
+  .animate-fade-in  { animation: fadeIn 0.3s ease-out; }
+  .animate-slide-up { animation: slideUp 0.4s ease-out; }
+  .animate-scale-in { animation: scaleIn 0.25s ease-out; }
 
   .text-balance { text-wrap: balance; }
+
+  /* Staggered fade-in for list items */
+  .animate-stagger > * {
+    opacity: 0;
+    animation: fadeSlideUp 0.4s ease-out forwards;
+  }
+  .animate-stagger > *:nth-child(1) { animation-delay: 0ms; }
+  .animate-stagger > *:nth-child(2) { animation-delay: 60ms; }
+  .animate-stagger > *:nth-child(3) { animation-delay: 120ms; }
+  .animate-stagger > *:nth-child(4) { animation-delay: 180ms; }
+  .animate-stagger > *:nth-child(5) { animation-delay: 240ms; }
+  .animate-stagger > *:nth-child(6) { animation-delay: 300ms; }
+  .animate-stagger > *:nth-child(7) { animation-delay: 360ms; }
+  .animate-stagger > *:nth-child(8) { animation-delay: 420ms; }
+
+  /* Glow pulse for AI processing */
+  .animate-glow-pulse {
+    animation: glowPulse 2s ease-in-out infinite;
+  }
+
+  /* Skeleton shimmer for loading states */
+  .animate-shimmer {
+    background: linear-gradient(90deg, transparent 0%, rgba(148,163,184,0.08) 50%, transparent 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+  }
 
   /* Scrollbar styling */
   .scrollbar-thin::-webkit-scrollbar       { width: 4px; }
@@ -113,7 +151,54 @@
   .scrollbar-thin::-webkit-scrollbar-thumb { @apply bg-gray-300 rounded-full dark:bg-gray-600; }
 }
 
-/* ─── Dark mode transition ──────────────────────────────────── */
+/* ─── Keyframes ────────────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(12px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+@keyframes fadeSlideUp {
+  from { transform: translateY(16px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 4px rgba(139,92,246,0.3); }
+  50%      { box-shadow: 0 0 16px rgba(139,92,246,0.6); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  33%      { transform: translateY(-12px) rotate(1deg); }
+  66%      { transform: translateY(6px) rotate(-1deg); }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%      { transform: translateY(-20px) scale(1.05); }
+}
+
+/* ─── Dark mode ────────────────────────────────────────────── */
 html.dark {
   color-scheme: dark;
+}
+
+/* Softer borders in dark mode globally */
+.dark .border-gray-700 {
+  border-color: rgba(27, 37, 59, 0.7);
 }

@@ -95,7 +95,7 @@ const MyGrievancesPage = () => {
         />
       ) : (
         <>
-          <div className="space-y-3">
+          <div className="space-y-3 animate-stagger">
             {grievances.map((g) => (
               <GrievanceCard key={g._id} grievance={g} linkBase="/grievances" />
             ))}

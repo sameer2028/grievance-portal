@@ -55,7 +55,7 @@ const CitizenDashboard = () => {
       </div>
 
       {/* Stats row */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 animate-stagger">
         <StatCard label="Total Submitted"   value={stats.total}     icon="📋" color="bg-blue-100 dark:bg-blue-900/40"   iconColor="text-blue-600 dark:text-blue-300"   loading={isLoading} />
         <StatCard label="Pending Review"    value={stats.pending}   icon="🕐" color="bg-yellow-100 dark:bg-yellow-900/40" iconColor="text-yellow-600 dark:text-yellow-300" loading={isLoading} />
         <StatCard label="Resolved"          value={stats.resolved}  icon="✅" color="bg-green-100 dark:bg-green-900/40"  iconColor="text-green-600 dark:text-green-300"  loading={isLoading} />
@@ -117,7 +117,7 @@ const CitizenDashboard = () => {
             action={{ label: 'Submit a Grievance', to: '/grievances/submit' }}
           />
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-3 animate-stagger">
             {grievances.slice(0, 5).map((g) => (
               <GrievanceCard key={g._id} grievance={g} linkBase="/grievances" />
             ))}
