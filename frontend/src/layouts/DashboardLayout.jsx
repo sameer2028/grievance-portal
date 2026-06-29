@@ -40,9 +40,9 @@ const DashboardLayout = () => {
     <div className="flex flex-col h-full">
       <div className="h-16 flex items-center px-6 border-b border-gray-200 dark:border-gray-700 gap-3 shrink-0">
         <div className="w-7 h-7 bg-primary-600 rounded flex items-center justify-center shrink-0">
-          <span className="text-white text-xs font-bold">G</span>
+          <span className="text-white text-xs font-bold">J</span>
         </div>
-        <span className="font-bold text-gray-900 dark:text-gray-100 truncate">GrievancePortal</span>
+        <span className="font-bold text-gray-900 dark:text-gray-100 truncate">JanSamadhan</span>
       </div>
 
       <nav className="flex-1 p-4 space-y-1 overflow-y-auto">

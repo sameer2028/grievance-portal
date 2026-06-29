@@ -26,6 +26,20 @@ const MyGrievancesPage = () => {
     dispatch(fetchMyGrievances({ page, limit: 8, status: statusFilter || undefined }));
   }, [dispatch, page, statusFilter]);
 
+  // Auto-poll while AI analysis is processing for any grievance
+  useEffect(() => {
+    const hasPendingAi = grievances.some(
+      (g) => !g.aiAnalysis || g.aiAnalysis.analysisStatus === 'pending' || g.aiAnalysis.analysisStatus === 'processing'
+    );
+    if (!hasPendingAi) return;
+
+    const timer = setInterval(() => {
+      dispatch(fetchMyGrievances({ page, limit: 8, status: statusFilter || undefined }));
+    }, 2500);
+
+    return () => clearInterval(timer);
+  }, [dispatch, grievances, page, statusFilter]);
+
   const handleStatusChange = (val) => {
     setStatusFilter(val);
     setPage(1);

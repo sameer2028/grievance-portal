@@ -12,9 +12,9 @@ const PublicLayout = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2">
             <div className="w-8 h-8 bg-primary-600 rounded-md flex items-center justify-center">
-              <span className="text-white text-sm font-bold">G</span>
+              <span className="text-white text-sm font-bold">J</span>
             </div>
-            <span className="font-semibold text-gray-900 dark:text-gray-100">GrievancePortal</span>
+            <span className="font-semibold text-gray-900 dark:text-gray-100">JanSamadhan</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -84,7 +84,7 @@ const PublicLayout = () => {
       </main>
 
       <footer className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-4 text-center text-sm text-gray-500 dark:text-gray-400">
-        © 2024 Grievance Portal · Smart India Hackathon
+        © 2026 JanSamadhan · Smart India Hackathon
       </footer>
     </div>
   );

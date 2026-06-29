@@ -41,10 +41,10 @@ const LoginPage = () => {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="w-12 h-12 bg-primary-600 rounded-xl flex items-center justify-center mx-auto mb-4">
-            <span className="text-white text-xl font-bold">G</span>
+            <span className="text-white text-xl font-bold">J</span>
           </div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Welcome back</h1>
-          <p className="text-gray-500 dark:text-gray-400 mt-1 text-sm">Sign in to your grievance portal account</p>
+          <p className="text-gray-500 dark:text-gray-400 mt-1 text-sm">Sign in to your JanSamadhan account</p>
         </div>
 
         <div className="card animate-fade-in">

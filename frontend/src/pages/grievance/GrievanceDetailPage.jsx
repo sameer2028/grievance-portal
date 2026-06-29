@@ -88,6 +88,18 @@ const GrievanceDetailPage = () => {
     return () => dispatch(clearSelected());
   }, [id, dispatch]);
 
+  // Auto-poll while AI analysis is processing
+  useEffect(() => {
+    const aiStatus = grievance?.aiAnalysis?.analysisStatus;
+    if (!grievance || aiStatus === 'completed' || aiStatus === 'failed') return;
+
+    const timer = setInterval(() => {
+      dispatch(fetchGrievanceById(id));
+    }, 2500);
+
+    return () => clearInterval(timer);
+  }, [id, dispatch, grievance]);
+
   // Load feedback for resolved grievances
   useEffect(() => {
     if (grievance?.status === GRIEVANCE_STATUS.RESOLVED && isCitizen) {

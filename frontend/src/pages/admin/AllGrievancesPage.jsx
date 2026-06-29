@@ -121,6 +121,20 @@ const AllGrievancesPage = () => {
 
   useEffect(() => { load(); }, [load]);
 
+  // Auto-poll while AI analysis is processing for any grievance
+  useEffect(() => {
+    const hasPendingAi = grievances.some(
+      (g) => !g.aiAnalysis || g.aiAnalysis.analysisStatus === 'pending' || g.aiAnalysis.analysisStatus === 'processing'
+    );
+    if (!hasPendingAi) return;
+
+    const timer = setInterval(() => {
+      load();
+    }, 2500);
+
+    return () => clearInterval(timer);
+  }, [grievances, load]);
+
   const handleFilterChange = (newFilters) => {
     setFilters(newFilters);
     setPage(1);

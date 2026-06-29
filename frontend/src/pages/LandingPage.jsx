@@ -49,11 +49,10 @@ const LandingPage = () => (
           Smart India Hackathon 2024
         </span>
         <h1 className="text-4xl sm:text-5xl font-bold leading-tight mb-6 text-balance text-white">
-          AI-Powered Public<br />Grievance Portal
+          JanSamadhan
         </h1>
         <p className="text-primary-100 dark:text-gray-300 text-lg max-w-2xl mx-auto mb-10 text-balance">
-          Submit your complaints, track resolutions, and hold authorities accountable — powered by
-          machine learning for faster, smarter routing.
+          AI-Powered Smart Public Grievance Platform — Submit complaints, track resolutions, and hold authorities accountable.
         </p>
         <div className="flex flex-wrap gap-4 justify-center">
           <Link to="/register" className="btn bg-white text-primary-700 hover:bg-primary-50 dark:bg-primary-600 dark:text-white dark:hover:bg-primary-500 px-8 py-3 font-semibold shadow-lg">
@@ -86,7 +85,7 @@ const LandingPage = () => (
     {/* ── Features ─────────────────────────────────────────────────── */}
     <section className="max-w-5xl mx-auto px-6 py-20">
       <h2 className="text-center text-3xl font-bold text-gray-900 dark:text-white mb-3">
-        Why GrievancePortal?
+        Why JanSamadhan?
       </h2>
       <p className="text-center text-gray-500 dark:text-gray-400 mb-12 max-w-xl mx-auto">
         Built for real-world government workflows — not just a demo.

@@ -44,7 +44,7 @@ const AIAnalysisPanel = ({ aiAnalysis }) => {
           <div>
             <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">AI Analysis in Progress</p>
             <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
-              Classification and sentiment analysis running. Refresh in a few seconds.
+              Classification and sentiment analysis running. Updating automatically...
             </p>
           </div>
         </div>

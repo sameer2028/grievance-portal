@@ -19,6 +19,20 @@ const CitizenDashboard = () => {
     dispatch(fetchMyGrievances({ limit: 5 }));
   }, [dispatch]);
 
+  // Auto-poll while AI analysis is processing for any grievance
+  useEffect(() => {
+    const hasPendingAi = grievances.some(
+      (g) => !g.aiAnalysis || g.aiAnalysis.analysisStatus === 'pending' || g.aiAnalysis.analysisStatus === 'processing'
+    );
+    if (!hasPendingAi) return;
+
+    const timer = setInterval(() => {
+      dispatch(fetchMyGrievances({ limit: 5 }));
+    }, 2500);
+
+    return () => clearInterval(timer);
+  }, [dispatch, grievances]);
+
   // Compute stats from the loaded list
   const stats = {
     total:      grievances.length,
