@@ -11,7 +11,7 @@
   [![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose-47A248.svg?logo=mongodb&style=flat-square)](https://www.mongodb.com/)
   [![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC.svg?logo=tailwind-css&style=flat-square)](https://tailwindcss.com/)
 
-  ### [🚀 View Live Deployment Here](https://grievance-portal-jade.vercel.app/)
+  ### [🚀 View Live Deployment Here](https://jansamadhan-up.vercel.app/)
 
   *Built for the Smart India Hackathon (SIH)*
 </div>
