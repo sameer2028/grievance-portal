@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchMyGrievances, selectGrievanceList, selectGrievanceLoading } from '@/store/slices/grievanceSlice';
+import { fetchMyGrievances, selectGrievanceList, selectGrievancePagination, selectGrievanceLoading } from '@/store/slices/grievanceSlice';
 import { useAuth } from '@/hooks/useAuth';
 import StatCard from '@/components/ui/StatCard';
 import GrievanceCard from '@/components/grievance/GrievanceCard';
@@ -13,10 +13,11 @@ const CitizenDashboard = () => {
   const dispatch = useDispatch();
   const { user } = useAuth();
   const grievances = useSelector(selectGrievanceList);
+  const pagination = useSelector(selectGrievancePagination);
   const isLoading = useSelector(selectGrievanceLoading);
 
   useEffect(() => {
-    dispatch(fetchMyGrievances({ limit: 5 }));
+    dispatch(fetchMyGrievances({ limit: 100 }));
   }, [dispatch]);
 
   // Auto-poll while AI analysis is processing for any grievance
@@ -27,16 +28,16 @@ const CitizenDashboard = () => {
     if (!hasPendingAi) return;
 
     const timer = setInterval(() => {
-      dispatch(fetchMyGrievances({ limit: 5 }));
+      dispatch(fetchMyGrievances({ limit: 100 }));
     }, 2500);
 
     return () => clearInterval(timer);
   }, [dispatch, grievances]);
 
-  // Compute stats from the loaded list
+  // Compute stats from the loaded list and backend pagination total
   const stats = {
-    total:      grievances.length,
-    pending:    grievances.filter((g) => g.status === GRIEVANCE_STATUS.PENDING).length,
+    total:      pagination?.total ?? grievances.length,
+    pending:    grievances.filter((g) => g.status === GRIEVANCE_STATUS.PENDING || g.status === GRIEVANCE_STATUS.ASSIGNED || g.status === GRIEVANCE_STATUS.IN_PROGRESS).length,
     resolved:   grievances.filter((g) => g.status === GRIEVANCE_STATUS.RESOLVED).length,
     escalated:  grievances.filter((g) => g.status === GRIEVANCE_STATUS.ESCALATED).length,
   };

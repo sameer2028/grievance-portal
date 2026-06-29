@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     # Model config
     embedding_model: str = "all-MiniLM-L6-v2"
     classification_threshold: float = 0.45
-    duplicate_threshold: float = 0.88
+    duplicate_threshold: float = 0.58
 
     # CORS
     backend_url: str = "http://localhost:5000"

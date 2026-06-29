@@ -52,7 +52,7 @@ const findBestOfficerForDepartment = async (department) => {
  * Updates the Grievance document in MongoDB with results.
  * Called asynchronously (fire-and-forget) from grievanceService.
  */
-const analyzeGrievance = async (grievanceId, title, description) => {
+const analyzeGrievance = async (grievanceId, title, description, attachments = []) => {
   // Mark as processing before making the call
   await Grievance.findByIdAndUpdate(grievanceId, {
     'aiAnalysis.analysisStatus': 'processing',
@@ -63,6 +63,7 @@ const analyzeGrievance = async (grievanceId, title, description) => {
       grievance_id: grievanceId.toString(),
       title,
       description,
+      attachments: attachments || [],
     });
 
     const {
@@ -140,13 +141,13 @@ const analyzeGrievance = async (grievanceId, title, description) => {
  */
 const retryFailedAnalyses = async () => {
   const failed = await Grievance.find({ 'aiAnalysis.analysisStatus': 'failed' })
-    .select('_id title description')
+    .select('_id title description attachments')
     .limit(20);
 
   logger.info(`Retrying AI analysis for ${failed.length} grievances`);
 
   for (const g of failed) {
-    await analyzeGrievance(g._id, g.title, g.description);
+    await analyzeGrievance(g._id, g.title, g.description, g.attachments);
   }
 };
 

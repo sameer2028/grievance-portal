@@ -31,7 +31,7 @@ const createGrievance = async ({ title, description, location, attachments, subm
   // Fire-and-forget: trigger AI analysis without blocking the response
   // If AI service is down, the grievance is still created — analysis retries can be scheduled
   setImmediate(() => {
-    aiService.analyzeGrievance(grievance._id, title, description).catch((err) => {
+    aiService.analyzeGrievance(grievance._id, title, description, grievance.attachments).catch((err) => {
       logger.error(`AI analysis failed for ${grievance.ticketNumber}`, { error: err.message });
     });
   });
@@ -54,9 +54,16 @@ const getAllGrievances = async ({
 }) => {
   const query = {};
 
-  // Officers are scoped to their department
-  if (requestingUser.role === ROLES.OFFICER && requestingUser.department) {
-    query.department = requestingUser.department;
+  // Officers are strictly scoped to their assigned department
+  if (requestingUser.role === ROLES.OFFICER) {
+    let dept = requestingUser.department;
+    if (!dept && requestingUser.id) {
+      const officerDoc = await User.findById(requestingUser.id).select('department');
+      dept = officerDoc?.department;
+    }
+    if (dept) {
+      query.department = dept;
+    }
   }
 
   // Apply optional filters

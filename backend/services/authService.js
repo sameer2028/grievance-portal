@@ -103,7 +103,8 @@ const refreshAccessToken = async (refreshToken) => {
   const { accessToken, refreshToken: newRefreshToken } = generateTokens(
     user._id,
     user.email,
-    user.role
+    user.role,
+    user.department
   );
 
   user.refreshToken = newRefreshToken;

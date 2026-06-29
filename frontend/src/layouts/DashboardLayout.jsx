@@ -38,9 +38,9 @@ const DashboardLayout = () => {
 
   const sidebarContent = (
     <div className="flex flex-col h-full">
-      <div className="h-16 flex items-center px-6 border-b border-gray-200 dark:border-gray-700 gap-3 shrink-0">
-        <div className="w-7 h-7 bg-primary-600 rounded flex items-center justify-center shrink-0">
-          <span className="text-white text-xs font-bold">J</span>
+      <div className="h-20 flex items-center px-6 border-b border-gray-200 dark:border-gray-700 gap-3 shrink-0">
+        <div className="w-16 h-16 rounded-xl overflow-hidden flex items-center justify-center shrink-0 shadow-md">
+          <img src="/faviconnew.png" alt="JanSamadhan Logo" className="w-full h-full object-cover" />
         </div>
         <span className="font-bold text-gray-900 dark:text-gray-100 truncate">JanSamadhan</span>
       </div>

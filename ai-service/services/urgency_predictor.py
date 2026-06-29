@@ -23,17 +23,20 @@ URGENCY_KEYWORDS: dict[str, float] = {
     "child missing": 1.0, "missing person": 1.0,
     "suicide": 1.0, "attempted suicide": 1.0,
 
-    # High — significant harm
+    # High — significant harm & road/physical hazard
     "bleeding": 0.85, "injury": 0.8, "attack": 0.8, "assault": 0.85,
     "electric shock": 0.85, "gas leak": 0.9, "sewage overflow": 0.75,
     "no water days": 0.75, "epidemic": 0.9, "disease spread": 0.85,
     "contaminated water": 0.8, "food poison": 0.85,
+    "uprooted": 0.85, "impassable": 0.85, "blocking": 0.80, "hazard": 0.80,
+    "road blocked": 0.85, "obstacle": 0.75, "debris": 0.70, "collapsed tree": 0.85,
 
     # Medium — significant inconvenience
     "days": 0.5, "weeks": 0.55, "no electricity": 0.6,
     "no water": 0.6, "broken": 0.45, "not working": 0.4,
     "urgent": 0.65, "immediate": 0.65, "emergency": 0.8,
     "harassment": 0.7, "threat": 0.75, "danger": 0.7,
+    "tree": 0.55, "pathway": 0.50, "road": 0.45,
 
     # Time pressure signals
     "since last week": 0.55, "months ago": 0.5, "repeated complaint": 0.6,

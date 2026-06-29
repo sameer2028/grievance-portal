@@ -9,12 +9,12 @@ const PublicLayout = () => {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
       {/* Minimal public header */}
       <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm relative z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary-600 rounded-md flex items-center justify-center">
-              <span className="text-white text-sm font-bold">J</span>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+          <Link to="/" className="flex items-center gap-3">
+            <div className="w-14 h-14 rounded-xl overflow-hidden flex items-center justify-center shrink-0 shadow-md">
+              <img src="/faviconnew.png" alt="JanSamadhan Logo" className="w-full h-full object-cover" />
             </div>
-            <span className="font-semibold text-gray-900 dark:text-gray-100">JanSamadhan</span>
+            <span className="font-bold text-lg text-gray-900 dark:text-gray-100">JanSamadhan</span>
           </Link>
 
           {/* Desktop Navigation */}

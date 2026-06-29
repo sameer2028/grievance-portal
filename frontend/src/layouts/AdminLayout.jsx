@@ -55,16 +55,17 @@ const AdminLayout = () => {
   const sidebarContent = (
     <div className="flex flex-col h-full">
       {/* Logo + collapse toggle */}
-      <div className="h-16 flex items-center px-4 border-b border-gray-200 dark:border-gray-700 gap-3">
-        <div className="w-7 h-7 bg-primary-600 rounded flex items-center justify-center shrink-0">
-          <span className="text-white text-xs font-bold">G</span>
+      <div className={`h-16 flex items-center border-b border-gray-200 dark:border-gray-700 transition-all ${sidebarOpen ? 'px-4 gap-3' : 'px-1 justify-center'}`}>
+        <div className={`rounded-xl overflow-hidden flex items-center justify-center shrink-0 shadow-sm transition-all ${sidebarOpen ? 'w-10 h-10' : 'w-9 h-9'}`}>
+          <img src="/faviconnew.png" alt="JanSamadhan Logo" className="w-full h-full object-cover" />
         </div>
         {sidebarOpen && (
           <span className="font-semibold text-gray-900 dark:text-gray-100 text-sm truncate">Admin Panel</span>
         )}
         <button
           onClick={() => dispatch(toggleSidebar())}
-          className="ml-auto text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 hidden lg:block"
+          className={`text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 hidden lg:block ${sidebarOpen ? 'ml-auto' : 'mt-1 text-xs'}`}
+          title={sidebarOpen ? "Collapse sidebar" : "Expand sidebar"}
         >
           {sidebarOpen ? '‹' : '›'}
         </button>
