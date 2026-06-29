@@ -29,7 +29,7 @@ const FEATURES = [
   {
     icon: '🔒',
     title: 'Secure & Private',
-    desc: 'JWT authentication, role-based access control, and encrypted tokens protect every citizens data. ' ,
+    desc: 'JWT authentication, role-based access control, and encrypted tokens protect every citizens data. ',
   },
 ];
 
@@ -87,9 +87,9 @@ const LandingPage = () => (
       <div className="max-w-5xl mx-auto px-6 py-10 grid grid-cols-2 sm:grid-cols-4 gap-8 text-center">
         {[
           { val: '10,000+', label: 'Grievances Processed' },
-          { val: '9',       label: 'Departments Covered' },
-          { val: '87%',     label: 'Resolved Within SLA' },
-          { val: '<30s',    label: 'Avg. AI Analysis Time' },
+          { val: '9', label: 'Departments Covered' },
+          { val: '87%', label: 'Resolved Within SLA' },
+          { val: '<30s', label: 'Avg. AI Analysis Time' },
         ].map((s) => (
           <div key={s.label} className="group">
             <p className="text-3xl font-extrabold font-mono text-primary-600 dark:text-primary-400 tracking-tight group-hover:scale-105 transition-transform">{s.val}</p>

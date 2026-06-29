@@ -53,22 +53,22 @@ const PublicLayout = () => {
         {/* Mobile Navigation Menu */}
         {isMenuOpen && (
           <div className="md:hidden absolute top-16 left-0 right-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-lg py-4 px-4 flex flex-col gap-4">
-            <Link 
-              to="/track" 
+            <Link
+              to="/track"
               onClick={() => setIsMenuOpen(false)}
               className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 font-medium py-2 px-2 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
             >
               Track Grievance
             </Link>
-            <Link 
-              to="/login" 
+            <Link
+              to="/login"
               onClick={() => setIsMenuOpen(false)}
               className="btn-secondary text-sm px-3 py-2.5 text-center dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
             >
               Login
             </Link>
-            <Link 
-              to="/register" 
+            <Link
+              to="/register"
               onClick={() => setIsMenuOpen(false)}
               className="btn-primary text-sm px-3 py-2.5 text-center"
             >
