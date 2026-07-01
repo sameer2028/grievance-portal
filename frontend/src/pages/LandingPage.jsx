@@ -60,10 +60,10 @@ const LandingPage = () => (
       </div>
 
       <div className="relative max-w-5xl mx-auto px-6 py-28 text-center">
-        <span className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 bg-primary-500/15 border border-primary-400/20 rounded-full text-xs font-semibold uppercase tracking-widest text-primary-300 backdrop-blur-sm">
+        {/* <span className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 bg-primary-500/15 border border-primary-400/20 rounded-full text-xs font-semibold uppercase tracking-widest text-primary-300 backdrop-blur-sm">
           <span className="w-1.5 h-1.5 rounded-full bg-primary-400 animate-glow-pulse" />
           Smart India Hackathon 2024
-        </span>
+        </span> */}
         <h1 className="text-5xl sm:text-6xl font-extrabold leading-tight mb-6 text-balance text-white tracking-tight">
           Jan<span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-300 to-primary-500">Samadhan</span>
         </h1>
